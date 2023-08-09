@@ -1,7 +1,7 @@
 {
 	"stryker-config": {
 		"project-info": {
-			"name": "github.com/Testably/Testably.Abstractions",
+			"name": "github.com/Testably/Testably.Abstractions.FluentAssertions",
 			"module": "Testably.Abstractions.FluentAssertions"
 		},
 		"test-projects": [
