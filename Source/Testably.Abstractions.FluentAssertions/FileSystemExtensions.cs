@@ -10,7 +10,5 @@ public static class FileSystemExtensions
 	///     assert the current <see cref="IFileSystem" />.
 	/// </summary>
 	public static FileSystemAssertions Should(this IFileSystem instance)
-	{
-		return new FileSystemAssertions(instance);
-	}
+		=> new(instance);
 }
