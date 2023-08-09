@@ -159,4 +159,153 @@ public class FileSystemAssertionsTests
 		exception!.Message.Should().Contain(path);
 		exception.Message.Should().Contain(because);
 	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveDirectory_And_WithOnlyOneDirectory_ShouldThrow(string path1, string path2)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory(path2);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			fileSystem.Should().NotHaveDirectory(path1).And.NotHaveDirectory(path2);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain(path2);
+		exception.Message.Should().NotContain(path1);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveDirectory_And_WithoutAnyDirectories_ShouldNotThrow(string path1,
+		string path2)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize();
+
+		fileSystem.Should().NotHaveDirectory(path1).And.NotHaveDirectory(path2);
+	}
+
+	[Theory]
+	[InlineAutoData(null)]
+	[InlineAutoData("")]
+	public void NotHaveDirectory_InvalidPath_ShouldThrow(string? invalidPath, string because)
+	{
+		MockFileSystem fileSystem = new();
+		FileSystemAssertions sut = fileSystem.Should();
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.NotHaveDirectory(invalidPath!, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().NotBeNullOrEmpty();
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveDirectory_WithDirectory_ShouldThrow(
+		string path,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory(path);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			fileSystem.Should().NotHaveDirectory(path, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain(path);
+		exception.Message.Should().Contain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveDirectory_WithoutDirectory_ShouldNotThrow(string path)
+	{
+		MockFileSystem fileSystem = new();
+
+		fileSystem.Should().NotHaveDirectory(path);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveFile_And_WithOnlyOneFile_ShouldThrow(string path1, string path2)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(path2);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			fileSystem.Should().NotHaveFile(path1).And.NotHaveFile(path2);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain(path2);
+		exception.Message.Should().NotContain(path1);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveFile_And_WithoutAnyFiles_ShouldNotThrow(string path1, string path2)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize();
+
+		fileSystem.Should().NotHaveFile(path1).And.NotHaveFile(path2);
+	}
+
+	[Theory]
+	[InlineAutoData(null)]
+	[InlineAutoData("")]
+	public void NotHaveFile_InvalidPath_ShouldThrow(string? invalidPath, string because)
+	{
+		MockFileSystem fileSystem = new();
+		FileSystemAssertions sut = fileSystem.Should();
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.NotHaveFile(invalidPath!, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().NotBeNullOrEmpty();
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveFile_WithFile_ShouldThrow(string path, string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(path);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			fileSystem.Should().NotHaveFile(path, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain(path);
+		exception.Message.Should().Contain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveFile_WithoutFile_ShouldNotThrow(string path)
+	{
+		MockFileSystem fileSystem = new();
+
+		fileSystem.Should().NotHaveFile(path);
+	}
 }
