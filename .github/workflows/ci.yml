@@ -120,9 +120,9 @@ jobs:
       - name: Navigate to Workspace
         run: cd $GITHUB_WORKSPACE
       - name: Build solution
-        run: msbuild.exe Testably.Abstractions.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
+        run: msbuild.exe Testably.Abstractions.FluentAssertions.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
       - name: Run tests
-        run: vstest.console.exe .\Build\Tests\Testably.Abstractions.Tests\net48\Testably.Abstractions.Tests.dll .\Build\Tests\Testably.Abstractions.Parity.Tests\net48\Testably.Abstractions.Parity.Tests.dll .\Build\Tests\Testably.Abstractions.Testing.Tests\net48\Testably.Abstractions.Testing.Tests.dll /Logger:trx /ResultsDirectory:TestResults
+        run: vstest.console.exe .\Build\Tests\Testably.Abstractions.FluentAssertions.Tests\net48\Testably.Abstractions.FluentAssertions.Tests.dll /Logger:trx /ResultsDirectory:TestResults
       - name: Upload test results (.NET Framework)
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
