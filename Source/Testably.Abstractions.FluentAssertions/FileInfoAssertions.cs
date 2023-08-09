@@ -21,6 +21,7 @@ public class FileInfoAssertions :
 		string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.Given(() => Subject)
 			.ForCondition(fileInfo => !fileInfo.IsReadOnly)

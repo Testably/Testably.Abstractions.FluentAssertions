@@ -81,8 +81,9 @@ public class FileSystemAssertionsTests
 		});
 
 		exception.Should().NotBeNull();
-		exception!.Message.Should().Contain(path);
-		exception.Message.Should().Contain(because);
+		exception!.Message.Should()
+			.Be(
+				$"Expected filesystem to contain directory \"{path}\" {because}, but it did not exist.");
 	}
 
 	[Theory]
@@ -156,8 +157,8 @@ public class FileSystemAssertionsTests
 		});
 
 		exception.Should().NotBeNull();
-		exception!.Message.Should().Contain(path);
-		exception.Message.Should().Contain(because);
+		exception!.Message.Should()
+			.Be($"Expected filesystem to contain file \"{path}\" {because}, but it did not exist.");
 	}
 
 	[Theory]
@@ -223,8 +224,9 @@ public class FileSystemAssertionsTests
 		});
 
 		exception.Should().NotBeNull();
-		exception!.Message.Should().Contain(path);
-		exception.Message.Should().Contain(because);
+		exception!.Message.Should()
+			.Be(
+				$"Expected filesystem to not contain directory \"{path}\" {because}, but it did exist.");
 	}
 
 	[Theory]
@@ -296,8 +298,8 @@ public class FileSystemAssertionsTests
 		});
 
 		exception.Should().NotBeNull();
-		exception!.Message.Should().Contain(path);
-		exception.Message.Should().Contain(because);
+		exception!.Message.Should()
+			.Be($"Expected filesystem to not contain file \"{path}\" {because}, but it did exist.");
 	}
 
 	[Theory]

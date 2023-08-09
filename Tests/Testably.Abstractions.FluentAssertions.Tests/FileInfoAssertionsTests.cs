@@ -27,8 +27,9 @@ public class FileInfoAssertionsTests
 		});
 
 		exception.Should().NotBeNull();
-		exception!.Message.Should().Contain(fileDescription.Name);
-		exception.Message.Should().Contain(because);
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileDescription.Name}\" not to be read-only {because}, but it was.");
 	}
 
 	[Theory]
@@ -75,7 +76,8 @@ public class FileInfoAssertionsTests
 		});
 
 		exception.Should().NotBeNull();
-		exception!.Message.Should().Contain(fileDescription.Name);
-		exception.Message.Should().Contain(because);
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileDescription.Name}\" to be read-only {because}, but it was not.");
 	}
 }
