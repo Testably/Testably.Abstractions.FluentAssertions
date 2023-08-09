@@ -88,10 +88,7 @@ jobs:
       - name: Build solution
         run: dotnet build /p:NetCoreOnly=True --configuration "Release"
       - name: Run tests
-        uses: Wandalen/wretry.action@v1.3.0
-        with:
-          command: dotnet test --no-build
-          attempt_limit: 2
+        run: dotnet test --no-build
 
   test-ubuntu:
     name: Test (Ubuntu)
@@ -115,10 +112,7 @@ jobs:
       - name: Build solution
         run: dotnet build /p:NetCoreOnly=True --configuration "Release"
       - name: Run tests
-        uses: Wandalen/wretry.action@v1.3.0
-        with:
-          command: dotnet test --no-build
-          attempt_limit: 2
+        run: dotnet test --no-build
 
   test-windows:
     name: Test (Windows)
@@ -142,10 +136,7 @@ jobs:
       - name: Build solution
         run: dotnet build /p:NetCoreOnly=True --configuration "Release"
       - name: Run tests
-        uses: Wandalen/wretry.action@v1.3.0
-        with:
-          command: dotnet test --no-build
-          attempt_limit: 2
+        run: dotnet test --no-build
 
   test-net-framework:
     name: Test (.NET Framework)
