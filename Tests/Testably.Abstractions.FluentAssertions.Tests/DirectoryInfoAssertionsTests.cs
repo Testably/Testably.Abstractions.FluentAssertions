@@ -62,7 +62,8 @@ public class DirectoryInfoAssertionsTests
 		});
 
 		exception.Should().NotBeNull();
-		exception!.Message.Should().Contain(fileName);
-		exception.Message.Should().Contain(because);
+		exception!.Message.Should()
+			.Be(
+				$"Expected directory \"{directoryName}\" to contain at least one file matching \"{fileName}\" {because}, but none was found.");
 	}
 }

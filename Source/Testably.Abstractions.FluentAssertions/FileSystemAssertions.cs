@@ -43,6 +43,7 @@ public class FileSystemAssertions :
 		string path, string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
 			.FailWith("You can't assert that a file exists if you don't pass a proper name.")
@@ -87,6 +88,7 @@ public class FileSystemAssertions :
 		string path, string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
 			.FailWith(
