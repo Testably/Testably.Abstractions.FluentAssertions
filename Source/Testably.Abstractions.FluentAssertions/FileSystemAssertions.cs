@@ -21,14 +21,15 @@ public class FileSystemAssertions :
 		string path, string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
-			.FailWith("You can't assert a directory exist if you don't pass a proper name")
+			.FailWith("You can't assert that a directory exists if you don't pass a proper name.")
 			.Then
 			.Given(() => Subject.DirectoryInfo.New(path))
 			.ForCondition(directoryInfo => directoryInfo.Exists)
 			.FailWith(
-				"Expected {context:filesystem} to contain directory {0}{reason}, but it did not exist.",
+				"Expected {context} to contain directory {0}{reason}, but it did not exist.",
 				_ => path, directoryInfo => directoryInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, DirectoryInfoAssertions>(this,
@@ -44,12 +45,12 @@ public class FileSystemAssertions :
 		Execute.Assertion
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
-			.FailWith("You can't assert a file exist if you don't pass a proper name")
+			.FailWith("You can't assert that a file exists if you don't pass a proper name.")
 			.Then
 			.Given(() => Subject.FileInfo.New(path))
 			.ForCondition(fileInfo => fileInfo.Exists)
 			.FailWith(
-				"Expected {context:filesystem} to contain file {0}{reason}, but it did not exist.",
+				"Expected {context} to contain file {0}{reason}, but it did not exist.",
 				_ => path, fileInfo => fileInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, FileInfoAssertions>(this,

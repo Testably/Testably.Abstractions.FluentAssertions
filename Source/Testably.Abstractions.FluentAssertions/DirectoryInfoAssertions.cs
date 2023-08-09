@@ -17,10 +17,11 @@ public class DirectoryInfoAssertions :
 	/// <summary>
 	///     Asserts that the current directory has at least one file which matches the <paramref name="searchPattern" />.
 	/// </summary>
-	public AndConstraint<DirectoryInfoAssertions> HasFile(
+	public AndConstraint<DirectoryInfoAssertions> HasFileMatching(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(searchPattern))
 			.FailWith(
@@ -29,7 +30,7 @@ public class DirectoryInfoAssertions :
 			.Given(() => Subject.GetFiles(searchPattern))
 			.ForCondition(fileInfos => fileInfos.Length > 0)
 			.FailWith(
-				"Expected {context:directory} '{1}' to contain at least one file matching {0}{reason}, but none was found.",
+				"Expected {context} {1} to contain at least one file matching {0}{reason}, but none was found.",
 				_ => searchPattern, _ => Subject.Name);
 
 		return new AndConstraint<DirectoryInfoAssertions>(this);
