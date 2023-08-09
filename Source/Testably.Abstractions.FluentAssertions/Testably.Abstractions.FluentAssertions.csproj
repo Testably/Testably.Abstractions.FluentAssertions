@@ -5,6 +5,7 @@
 		<Description>FluentAssertions extension methods for `Testably.Abstractions`.</Description>
 		<PackageReadmeFile>Docs/README.md</PackageReadmeFile>
 		<IsTestProject>false</IsTestProject>
+		<SonarQubeTestProject>false</SonarQubeTestProject>
 	</PropertyGroup>
 
 	<ItemGroup>
