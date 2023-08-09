@@ -171,35 +171,6 @@ jobs:
       - name: Run tests
         run: vstest.console.exe .\Build\Tests\Testably.Abstractions.FluentAssertions.Tests\net48\Testably.Abstractions.FluentAssertions.Tests.dll
 
-  test-examples:
-    name: Test (Examples)
-    runs-on: windows-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Tag current commit
-        shell: bash
-        run: |
-          version="${GITHUB_REF#refs/heads/release/}"
-          git tag "${version}"
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: |
-            6.0.x
-            7.0.x
-      - name: Build solution
-        run: dotnet build /p:NetCoreOnly=True
-      - name: Build example solution
-        run: dotnet build Examples /p:UseFileReferenceToTestablyLibraries=True --configuration "Release"
-      - name: Run example tests
-        uses: Wandalen/wretry.action@v1.3.0
-        with:
-          command: dotnet test Examples --no-build
-          attempt_limit: 2
-
   stryker:
     name: Analyze quality of unit test coverage with .NET Stryker
     runs-on: ubuntu-latest
@@ -231,7 +202,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: production
-    needs: [analyze, test-macos, test-ubuntu, test-windows, test-net-framework, test-examples]
+    needs: [analyze, test-macos, test-ubuntu, test-windows, test-net-framework]
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3

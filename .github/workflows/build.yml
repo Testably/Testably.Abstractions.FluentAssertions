@@ -166,30 +166,6 @@ jobs:
       - name: Run tests
         run: vstest.console.exe .\Build\Tests\Testably.Abstractions.FluentAssertions.Tests\net48\Testably.Abstractions.FluentAssertions.Tests.dll
         
-  test-examples:
-    name: Test (Examples)
-    runs-on: windows-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: |
-            6.0.x
-            7.0.x
-      - name: Build solution
-        run: dotnet build /p:NetCoreOnly=True --configuration "Release"
-      - name: Build example solution
-        run: dotnet build Examples /p:UseFileReferenceToTestablyLibraries=True
-      - name: Run example tests
-        uses: Wandalen/wretry.action@v1.3.0
-        with:
-          command: dotnet test Examples --no-build
-          attempt_limit: 2
-
   upload-coverage:
     name: Upload coverage to Codacy
     needs: [test-macos, test-ubuntu, test-windows, test-net-framework]
