@@ -9,6 +9,26 @@ namespace Testably.Abstractions.FluentAssertions.Tests;
 public class DirectoryInfoAssertionsTests
 {
 	[Theory]
+	[InlineAutoData(null)]
+	[InlineAutoData("")]
+	public void HasFile_InvalidFileName_ShouldThrow(string? invalidFileName, string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory("foo");
+		DirectoryInfoAssertions? sut = fileSystem.Should().HaveDirectory("foo").Which;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasFile(invalidFileName!, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().NotBeNullOrEmpty();
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
 	[AutoData]
 	public void HasFile_WithFile_ShouldNotThrow(
 		string directoryName,

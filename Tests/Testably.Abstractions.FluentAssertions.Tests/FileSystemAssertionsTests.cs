@@ -39,6 +39,24 @@ public class FileSystemAssertionsTests
 	}
 
 	[Theory]
+	[InlineAutoData(null)]
+	[InlineAutoData("")]
+	public void HaveDirectory_InvalidPath_ShouldThrow(string? invalidPath, string because)
+	{
+		MockFileSystem fileSystem = new();
+		FileSystemAssertions sut = fileSystem.Should();
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HaveDirectory(invalidPath!, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().NotBeNullOrEmpty();
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
 	[AutoData]
 	public void HaveDirectory_WithDirectory_ShouldNotThrow(string path)
 	{
@@ -95,6 +113,24 @@ public class FileSystemAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should().Contain(path2);
 		exception.Message.Should().NotContain(path1);
+	}
+
+	[Theory]
+	[InlineAutoData(null)]
+	[InlineAutoData("")]
+	public void HaveFile_InvalidPath_ShouldThrow(string? invalidPath, string because)
+	{
+		MockFileSystem fileSystem = new();
+		FileSystemAssertions sut = fileSystem.Should();
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HaveFile(invalidPath!, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().NotBeNullOrEmpty();
+		exception.Message.Should().NotContain(because);
 	}
 
 	[Theory]
