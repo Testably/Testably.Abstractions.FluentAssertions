@@ -17,7 +17,7 @@ public class DirectoryInfoAssertions :
 	/// <summary>
 	///     Asserts that the current directory has at least one file which matches the <paramref name="searchPattern" />.
 	/// </summary>
-	public AndConstraint<DirectoryInfoAssertions> HasFile(
+	public AndConstraint<DirectoryInfoAssertions> HasFileMatching(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
