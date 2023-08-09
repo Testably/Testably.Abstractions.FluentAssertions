@@ -120,45 +120,12 @@ jobs:
       - name: Navigate to Workspace
         run: cd $GITHUB_WORKSPACE
       - name: Build solution
-        run: msbuild.exe Testably.Abstractions.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
+        run: msbuild.exe Testably.Abstractions.FluentAssertions.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
       - name: Run tests
-        run: vstest.console.exe .\Build\Tests\Testably.Abstractions.Tests\net48\Testably.Abstractions.Tests.dll .\Build\Tests\Testably.Abstractions.Parity.Tests\net48\Testably.Abstractions.Parity.Tests.dll .\Build\Tests\Testably.Abstractions.Testing.Tests\net48\Testably.Abstractions.Testing.Tests.dll /Logger:trx /ResultsDirectory:TestResults
+        run: vstest.console.exe .\Build\Tests\Testably.Abstractions.FluentAssertions.Tests\net48\Testably.Abstractions.FluentAssertions.Tests.dll /Logger:trx /ResultsDirectory:TestResults
       - name: Upload test results (.NET Framework)
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: Test results (.NET Framework)
           path: TestResults
-        
-  test-examples:
-    name: Test (Examples)
-    runs-on: windows-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Save PR number to file
-        if: github.event_name == 'pull_request'
-        run: echo ${{ github.event.number }} > PR_NUMBER.txt
-      - name: Archive PR number
-        if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v3
-        with:
-          name: PR_NUMBER
-          path: PR_NUMBER.txt
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: |
-            6.0.x
-            7.0.x
-      - name: Build solution
-        run: dotnet build /p:NetCoreOnly=True --configuration "Release"
-      - name: Build example solution
-        run: dotnet build Examples /p:UseFileReferenceToTestablyLibraries=True
-      - name: Run example tests
-        uses: Wandalen/wretry.action@v1.3.0
-        with:
-          command: dotnet test Examples --no-build
-          attempt_limit: 2
