@@ -4,6 +4,7 @@
 		<RootNamespace>Testably.Abstractions.FluentAssertions</RootNamespace>
 		<Description>FluentAssertions extension methods for `Testably.Abstractions`.</Description>
 		<PackageReadmeFile>Docs/README.md</PackageReadmeFile>
+		<IsTestProject>false</IsTestProject>
 	</PropertyGroup>
 
 	<ItemGroup>
