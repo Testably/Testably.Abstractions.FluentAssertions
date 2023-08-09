@@ -4,7 +4,7 @@
 ///     Assertions on <see cref="IFileInfo" />.
 /// </summary>
 public class FileInfoAssertions :
-	ReferenceTypeAssertions<IFileInfo, FileInfoAssertions>
+	FileSystemInfoAssertions<IFileInfo, FileInfoAssertions>
 {
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "file";

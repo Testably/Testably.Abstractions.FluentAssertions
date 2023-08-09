@@ -4,7 +4,7 @@
 ///     Assertions on <see cref="IDirectoryInfo" />.
 /// </summary>
 public class DirectoryInfoAssertions :
-	ReferenceTypeAssertions<IDirectoryInfo, DirectoryInfoAssertions>
+	FileSystemInfoAssertions<IDirectoryInfo, DirectoryInfoAssertions>
 {
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "directory";
