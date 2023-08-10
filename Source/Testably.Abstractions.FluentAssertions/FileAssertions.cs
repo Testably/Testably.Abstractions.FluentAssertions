@@ -22,7 +22,15 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> IsNotReadOnly(
 		string because = "", params object[] becauseArgs)
 	{
-		Subject.Should().NotBeReadOnly(because, becauseArgs);
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.Given(() => Subject)
+			.ForCondition(fileInfo => !fileInfo.IsReadOnly)
+			.FailWith(
+				"Expected {context} {0} not to be read-only{reason}, but it was.",
+				_ => Subject.Name);
+
 		return new AndConstraint<FileAssertions>(this);
 	}
 
@@ -32,7 +40,15 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> IsReadOnly(
 		string because = "", params object[] becauseArgs)
 	{
-		Subject.Should().BeReadOnly(because, becauseArgs);
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.Given(() => Subject)
+			.ForCondition(fileInfo => fileInfo.IsReadOnly)
+			.FailWith(
+				"Expected {context} {0} to be read-only{reason}, but it was not.",
+				_ => Subject.Name);
+
 		return new AndConstraint<FileAssertions>(this);
 	}
 
@@ -42,7 +58,16 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> HasContentMatching(
 		Match pattern, string because = "", params object[] becauseArgs)
 	{
-		Subject.Should().HaveContentMatching(pattern, because, becauseArgs);
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.Given(() => Subject)
+			.ForCondition(fileInfo => pattern.Matches(
+				fileInfo.FileSystem.File.ReadAllText(fileInfo.FullName)))
+			.FailWith(
+				"Expected {context} {0} to match '{1}'{reason}, but it did not.",
+				_ => Subject.Name, _ => pattern);
+
 		return new AndConstraint<FileAssertions>(this);
 	}
 
@@ -53,7 +78,16 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> HasContentMatching(
 		Match pattern, Encoding encoding, string because = "", params object[] becauseArgs)
 	{
-		Subject.Should().HaveContentMatching(pattern, encoding, because, becauseArgs);
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.Given(() => Subject)
+			.ForCondition(fileInfo => pattern.Matches(
+				fileInfo.FileSystem.File.ReadAllText(fileInfo.FullName, encoding)))
+			.FailWith(
+				"Expected {context} {0} to match '{1}'{reason}, but it did not.",
+				_ => Subject.Name, _ => pattern);
+
 		return new AndConstraint<FileAssertions>(this);
 	}
 }

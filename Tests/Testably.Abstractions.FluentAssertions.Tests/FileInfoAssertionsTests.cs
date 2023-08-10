@@ -153,13 +153,13 @@ public class FileInfoAssertionsTests
 		string content = "Dans mes rêves";
 		MockFileSystem fileSystem = new();
 		fileSystem.Initialize();
-		fileSystem.File.WriteAllText(fileName, content, Encoding.ASCII);
+		fileSystem.File.WriteAllText(fileName, content, Encoding.Default);
 		IFileInfo sut = fileSystem.FileInfo.New(fileName);
 		string pattern = content;
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveContentMatching(pattern, Encoding.Default, because);
+			sut.Should().HaveContentMatching(pattern, Encoding.ASCII, because);
 		});
 
 		exception.Should().NotBeNull();
