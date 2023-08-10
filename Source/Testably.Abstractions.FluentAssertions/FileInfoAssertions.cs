@@ -17,38 +17,12 @@ public class FileInfoAssertions :
 	}
 
 	/// <summary>
-	///     Asserts that the current file is not read-only.
-	/// </summary>
-	public AndConstraint<FileInfoAssertions> NotBeReadOnly(
-		string because = "", params object[] becauseArgs)
-	{
-		Execute.Assertion
-			.WithDefaultIdentifier(Identifier)
-			.BecauseOf(because, becauseArgs)
-			.Given(() => Subject)
-			.ForCondition(fileInfo => !fileInfo.IsReadOnly)
-			.FailWith(
-				"Expected {context} {0} not to be read-only{reason}, but it was.",
-				_ => Subject.Name);
-
-		return new AndConstraint<FileInfoAssertions>(this);
-	}
-
-	/// <summary>
 	///     Asserts that the current file is read-only.
 	/// </summary>
 	public AndConstraint<FileInfoAssertions> BeReadOnly(
 		string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
-			.WithDefaultIdentifier(Identifier)
-			.BecauseOf(because, becauseArgs)
-			.Given(() => Subject)
-			.ForCondition(fileInfo => fileInfo.IsReadOnly)
-			.FailWith(
-				"Expected {context} {0} to be read-only{reason}, but it was not.",
-				_ => Subject.Name);
-
+		new FileAssertions(Subject).IsReadOnly(because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -58,16 +32,7 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> HaveContentMatching(
 		Match pattern, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
-			.WithDefaultIdentifier(Identifier)
-			.BecauseOf(because, becauseArgs)
-			.Given(() => Subject)
-			.ForCondition(fileInfo => pattern.Matches(
-				fileInfo.FileSystem.File.ReadAllText(fileInfo.FullName)))
-			.FailWith(
-				"Expected {context} {0} to match '{1}'{reason}, but it did not.",
-				_ => Subject.Name, _ => pattern);
-
+		new FileAssertions(Subject).HasContentMatching(pattern, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -78,16 +43,17 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> HaveContentMatching(
 		Match pattern, Encoding encoding, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
-			.WithDefaultIdentifier(Identifier)
-			.BecauseOf(because, becauseArgs)
-			.Given(() => Subject)
-			.ForCondition(fileInfo => pattern.Matches(
-				fileInfo.FileSystem.File.ReadAllText(fileInfo.FullName, encoding)))
-			.FailWith(
-				"Expected {context} {0} to match '{1}'{reason}, but it did not.",
-				_ => Subject.Name, _ => pattern);
+		new FileAssertions(Subject).HasContentMatching(pattern, encoding, because, becauseArgs);
+		return new AndConstraint<FileInfoAssertions>(this);
+	}
 
+	/// <summary>
+	///     Asserts that the current file is not read-only.
+	/// </summary>
+	public AndConstraint<FileInfoAssertions> NotBeReadOnly(
+		string because = "", params object[] becauseArgs)
+	{
+		new FileAssertions(Subject).IsNotReadOnly(because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 }

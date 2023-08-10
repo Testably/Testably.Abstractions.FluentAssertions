@@ -20,19 +20,7 @@ public class DirectoryInfoAssertions :
 	public AndConstraint<DirectoryInfoAssertions> HaveFileMatching(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
-			.WithDefaultIdentifier(Identifier)
-			.BecauseOf(because, becauseArgs)
-			.ForCondition(!string.IsNullOrEmpty(searchPattern))
-			.FailWith(
-				"You can't assert a file exist in the directory if you don't pass a proper name")
-			.Then
-			.Given(() => Subject.GetFiles(searchPattern))
-			.ForCondition(fileInfos => fileInfos.Length > 0)
-			.FailWith(
-				"Expected {context} {1} to contain at least one file matching {0}{reason}, but none was found.",
-				_ => searchPattern, _ => Subject.Name);
-
+		new DirectoryAssertions(Subject).HasFileMatching(searchPattern, because, becauseArgs);
 		return new AndConstraint<DirectoryInfoAssertions>(this);
 	}
 }
