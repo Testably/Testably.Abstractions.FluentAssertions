@@ -39,10 +39,10 @@ public class FileInfoAssertions :
 	/// <summary>
 	///     Asserts that the string content of the current file matches the <paramref name="pattern" />.
 	/// </summary>
-	public AndConstraint<FileInfoAssertions> HaveContentMatching(
+	public AndConstraint<FileInfoAssertions> HaveContent(
 		Match pattern, string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).HasContentMatching(pattern, because, becauseArgs);
+		new FileAssertions(Subject).HasContent(pattern, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -50,10 +50,10 @@ public class FileInfoAssertions :
 	///     Asserts that the string content of the current file using the given <paramref name="encoding" />
 	///     matches the <paramref name="pattern" />.
 	/// </summary>
-	public AndConstraint<FileInfoAssertions> HaveContentMatching(
+	public AndConstraint<FileInfoAssertions> HaveContent(
 		Match pattern, Encoding encoding, string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).HasContentMatching(pattern, encoding, because, becauseArgs);
+		new FileAssertions(Subject).HasContent(pattern, encoding, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
