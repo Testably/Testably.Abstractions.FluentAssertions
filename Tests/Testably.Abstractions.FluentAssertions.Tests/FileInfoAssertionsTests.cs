@@ -80,7 +80,7 @@ public class FileInfoAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected file \"{fileName}\" to match '{{{string.Join(", ", checkedBytes.Select(b => "0x" + b.ToString("X")))}}}' {because}, but it did not.");
+				$"Expected file \"{fileName}\" to match '{{{string.Join(", ", checkedBytes.Select(b => "0x" + b.ToString("X2")))}}}' {because}, but it did not.");
 	}
 
 	[Theory]
