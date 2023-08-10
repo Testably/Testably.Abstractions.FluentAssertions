@@ -1,4 +1,6 @@
-﻿namespace Testably.Abstractions.FluentAssertions;
+﻿using System.Text;
+
+namespace Testably.Abstractions.FluentAssertions;
 
 /// <summary>
 ///     Assertions on <see cref="IFileInfo" />.
@@ -46,6 +48,45 @@ public class FileInfoAssertions :
 			.FailWith(
 				"Expected {context} {0} to be read-only{reason}, but it was not.",
 				_ => Subject.Name);
+
+		return new AndConstraint<FileInfoAssertions>(this);
+	}
+
+	/// <summary>
+	///     Asserts that the string content of the current file matches the <paramref name="pattern" />.
+	/// </summary>
+	public AndConstraint<FileInfoAssertions> HasContentMatching(
+		Match pattern, string because = "", params object[] becauseArgs)
+	{
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.Given(() => Subject)
+			.ForCondition(fileInfo => pattern.Matches(
+				fileInfo.FileSystem.File.ReadAllText(fileInfo.FullName)))
+			.FailWith(
+				"Expected {context} {0} to match '{1}'{reason}, but it did not.",
+				_ => Subject.Name, _ => pattern);
+
+		return new AndConstraint<FileInfoAssertions>(this);
+	}
+
+	/// <summary>
+	///     Asserts that the string content of the current file using the given <paramref name="encoding" />
+	///     matches the <paramref name="pattern" />.
+	/// </summary>
+	public AndConstraint<FileInfoAssertions> HasContentMatching(
+		Match pattern, Encoding encoding, string because = "", params object[] becauseArgs)
+	{
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.Given(() => Subject)
+			.ForCondition(fileInfo => pattern.Matches(
+				fileInfo.FileSystem.File.ReadAllText(fileInfo.FullName, encoding)))
+			.FailWith(
+				"Expected {context} {0} to match '{1}'{reason}, but it did not.",
+				_ => Subject.Name, _ => pattern);
 
 		return new AndConstraint<FileInfoAssertions>(this);
 	}

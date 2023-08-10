@@ -59,7 +59,7 @@ public class FileSystemAssertions :
 	}
 
 	/// <summary>
-	///     Asserts that a directory at <paramref name="path" /> exists in the file system.
+	///     Asserts that no directory at <paramref name="path" /> exists in the file system.
 	/// </summary>
 	public AndWhichConstraint<FileSystemAssertions, DirectoryInfoAssertions> NotHaveDirectory(
 		string path, string because = "", params object[] becauseArgs)
@@ -82,7 +82,7 @@ public class FileSystemAssertions :
 	}
 
 	/// <summary>
-	///     Asserts that a file at <paramref name="path" /> exists in the file system.
+	///     Asserts that no file at <paramref name="path" /> exists in the file system.
 	/// </summary>
 	public AndWhichConstraint<FileSystemAssertions, FileInfoAssertions> NotHaveFile(
 		string path, string because = "", params object[] becauseArgs)
