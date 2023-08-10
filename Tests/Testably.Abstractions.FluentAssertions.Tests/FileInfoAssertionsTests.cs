@@ -13,6 +13,42 @@ public class FileInfoAssertionsTests
 {
 	[Theory]
 	[AutoData]
+	public void BeReadOnly_WithReadOnlyFile_ShouldNotThrow(FileDescription fileDescription)
+	{
+		fileDescription.IsReadOnly = true;
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.With(fileDescription);
+		IFileInfo sut = fileSystem.FileInfo.New(fileDescription.Name);
+
+		sut.Should().BeReadOnly();
+	}
+
+	[Theory]
+	[AutoData]
+	public void BeReadOnly_WithWritableFile_ShouldThrow(
+		FileDescription fileDescription,
+		string because)
+	{
+		fileDescription.IsReadOnly = false;
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.With(fileDescription);
+		IFileInfo sut = fileSystem.FileInfo.New(fileDescription.Name);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().BeReadOnly(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileDescription.Name}\" to be read-only {because}, but it was not.");
+	}
+
+	[Theory]
+	[AutoData]
 	public void HaveContentMatching_FullContent_ShouldNotThrow(
 		string content, string fileName)
 	{
@@ -134,7 +170,7 @@ public class FileInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void IsNotReadOnly_WithReadOnlyFile_ShouldThrow(
+	public void NotBeReadOnly_WithReadOnlyFile_ShouldThrow(
 		FileDescription fileDescription,
 		string because)
 	{
@@ -142,11 +178,11 @@ public class FileInfoAssertionsTests
 		MockFileSystem fileSystem = new();
 		fileSystem.Initialize()
 			.With(fileDescription);
-		FileAssertions? sut = fileSystem.Should().HaveFile(fileDescription.Name).Which;
+		IFileInfo sut = fileSystem.FileInfo.New(fileDescription.Name);
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.IsNotReadOnly(because);
+			sut.Should().NotBeReadOnly(because);
 		});
 
 		exception.Should().NotBeNull();
@@ -157,50 +193,14 @@ public class FileInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void IsNotReadOnly_WithWritableFile_ShouldNotThrow(FileDescription fileDescription)
+	public void NotBeReadOnly_WithWritableFile_ShouldNotThrow(FileDescription fileDescription)
 	{
 		fileDescription.IsReadOnly = false;
 		MockFileSystem fileSystem = new();
 		fileSystem.Initialize()
 			.With(fileDescription);
-		FileAssertions? sut = fileSystem.Should().HaveFile(fileDescription.Name).Which;
+		IFileInfo sut = fileSystem.FileInfo.New(fileDescription.Name);
 
-		sut.IsNotReadOnly();
-	}
-
-	[Theory]
-	[AutoData]
-	public void IsReadOnly_WithReadOnlyFile_ShouldNotThrow(FileDescription fileDescription)
-	{
-		fileDescription.IsReadOnly = true;
-		MockFileSystem fileSystem = new();
-		fileSystem.Initialize()
-			.With(fileDescription);
-		FileAssertions? sut = fileSystem.Should().HaveFile(fileDescription.Name).Which;
-
-		sut.IsReadOnly();
-	}
-
-	[Theory]
-	[AutoData]
-	public void IsReadOnly_WithWritableFile_ShouldThrow(
-		FileDescription fileDescription,
-		string because)
-	{
-		fileDescription.IsReadOnly = false;
-		MockFileSystem fileSystem = new();
-		fileSystem.Initialize()
-			.With(fileDescription);
-		FileAssertions? sut = fileSystem.Should().HaveFile(fileDescription.Name).Which;
-
-		Exception? exception = Record.Exception(() =>
-		{
-			sut.IsReadOnly(because);
-		});
-
-		exception.Should().NotBeNull();
-		exception!.Message.Should()
-			.Be(
-				$"Expected file \"{fileDescription.Name}\" to be read-only {because}, but it was not.");
+		sut.Should().NotBeReadOnly();
 	}
 }
