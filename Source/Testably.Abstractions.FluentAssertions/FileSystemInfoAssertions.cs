@@ -26,7 +26,7 @@ public abstract class
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.Given(() => Subject)
-			.ForCondition(fileInfo => fileInfo.Exists)
+			.ForCondition(fileSystemInfo => fileSystemInfo.Exists)
 			.FailWith(
 				"Expected {context} {0} to exist{reason}, but it did not.",
 				_ => Subject.Name);
