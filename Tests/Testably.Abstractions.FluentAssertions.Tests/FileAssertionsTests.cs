@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
 using System;
+using System.Linq;
 using System.Text;
 using Testably.Abstractions.Testing;
 using Testably.Abstractions.Testing.FileSystemInitializer;
@@ -12,7 +13,42 @@ public class FileAssertionsTests
 {
 	[Theory]
 	[AutoData]
-	public void HasContentMatching_FullContent_ShouldNotThrow(
+	public void HasContent_Bytes_FullContent_ShouldNotThrow(
+		byte[] bytes, string fileName)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName).Which(f => f.HasBytesContent(bytes));
+		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+
+		sut.HasContent(bytes);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasContent_Bytes_OnlyPartOfContent_ShouldNotThrow(
+		byte[] bytes, string fileName, string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName).Which(f => f.HasBytesContent(bytes));
+		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+		byte[] checkedBytes = bytes.Skip(1).ToArray();
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasContent(checkedBytes, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileName}\" to match '{{{string.Join(", ", checkedBytes.Select(b => "0x" + b.ToString("X")))}}}' {because}, but it did not.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasContent_FullContent_ShouldNotThrow(
 		string content, string fileName)
 	{
 		MockFileSystem fileSystem = new();
@@ -20,12 +56,12 @@ public class FileAssertionsTests
 			.WithFile(fileName).Which(f => f.HasStringContent(content));
 		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
 
-		sut.HasContentMatching(content);
+		sut.HasContent(content);
 	}
 
 	[Theory]
 	[AutoData]
-	public void HasContentMatching_FullContent_WithEncoding_ShouldNotThrow(
+	public void HasContent_FullContent_WithEncoding_ShouldNotThrow(
 		Encoding encoding, string content, string fileName)
 	{
 		MockFileSystem fileSystem = new();
@@ -33,12 +69,12 @@ public class FileAssertionsTests
 		fileSystem.File.WriteAllText(fileName, content, encoding);
 		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
 
-		sut.HasContentMatching(content, encoding);
+		sut.HasContent(content, encoding);
 	}
 
 	[Theory]
 	[AutoData]
-	public void HasContentMatching_OnlyPartOfContentWithoutWildcards_ShouldThrow(
+	public void HasContent_OnlyPartOfContentWithoutWildcards_ShouldThrow(
 		string content, string fileName, string because)
 	{
 		MockFileSystem fileSystem = new();
@@ -49,7 +85,7 @@ public class FileAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.HasContentMatching(pattern, because);
+			sut.HasContent(pattern, because);
 		});
 
 		exception.Should().NotBeNull();
@@ -60,7 +96,7 @@ public class FileAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HasContentMatching_OnlyPartOfContentWithoutWildcards_WithEncoding_ShouldThrow(
+	public void HasContent_OnlyPartOfContentWithoutWildcards_WithEncoding_ShouldThrow(
 		Encoding encoding, string content, string fileName, string because)
 	{
 		MockFileSystem fileSystem = new();
@@ -71,7 +107,7 @@ public class FileAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.HasContentMatching(pattern, encoding, because);
+			sut.HasContent(pattern, encoding, because);
 		});
 
 		exception.Should().NotBeNull();
@@ -82,7 +118,7 @@ public class FileAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HasContentMatching_OnlyPartOfContentWithWildcard_ShouldNotThrow(
+	public void HasContent_OnlyPartOfContentWithWildcard_ShouldNotThrow(
 		string content, string fileName)
 	{
 		MockFileSystem fileSystem = new();
@@ -91,12 +127,12 @@ public class FileAssertionsTests
 		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
 		string pattern = "*" + content.Substring(1);
 
-		sut.HasContentMatching(pattern);
+		sut.HasContent(pattern);
 	}
 
 	[Theory]
 	[AutoData]
-	public void HasContentMatching_OnlyPartOfContentWithWildcard_WithEncoding_ShouldNotThrow(
+	public void HasContent_OnlyPartOfContentWithWildcard_WithEncoding_ShouldNotThrow(
 		Encoding encoding, string content, string fileName)
 	{
 		MockFileSystem fileSystem = new();
@@ -105,12 +141,12 @@ public class FileAssertionsTests
 		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
 		string pattern = "*" + content.Substring(1);
 
-		sut.HasContentMatching(pattern);
+		sut.HasContent(pattern);
 	}
 
 	[Theory]
 	[AutoData]
-	public void HasContentMatching_WithEncodingMismatch_ShouldThrow(
+	public void HasContent_WithEncodingMismatch_ShouldThrow(
 		string fileName, string because)
 	{
 		string content = "Dans mes rêves";
@@ -122,7 +158,7 @@ public class FileAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.HasContentMatching(pattern, Encoding.ASCII, because);
+			sut.HasContent(pattern, Encoding.ASCII, because);
 		});
 
 		exception.Should().NotBeNull();

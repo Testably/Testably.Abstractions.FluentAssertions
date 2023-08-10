@@ -27,6 +27,16 @@ public class FileInfoAssertions :
 	}
 
 	/// <summary>
+	///     Asserts that the binary content of the current file is equivalent to the given <paramref name="bytes" />.
+	/// </summary>
+	public AndConstraint<FileInfoAssertions> HaveContent(
+		byte[] bytes, string because = "", params object[] becauseArgs)
+	{
+		new FileAssertions(Subject).HasContent(bytes, because, becauseArgs);
+		return new AndConstraint<FileInfoAssertions>(this);
+	}
+
+	/// <summary>
 	///     Asserts that the string content of the current file matches the <paramref name="pattern" />.
 	/// </summary>
 	public AndConstraint<FileInfoAssertions> HaveContentMatching(
