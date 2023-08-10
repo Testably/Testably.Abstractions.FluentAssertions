@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
 using System;
+using System.Text;
 using Testably.Abstractions.Testing;
 using Testably.Abstractions.Testing.FileSystemInitializer;
 using Xunit;
@@ -9,6 +10,127 @@ namespace Testably.Abstractions.FluentAssertions.Tests;
 
 public class FileInfoAssertionsTests
 {
+	[Theory]
+	[AutoData]
+	public void HasContentMatching_FullContent_ShouldNotThrow(
+		string content, string fileName)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName).Which(f => f.HasStringContent(content));
+		FileInfoAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+
+		sut.HasContentMatching(content);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasContentMatching_FullContent_WithEncoding_ShouldNotThrow(
+		Encoding encoding, string content, string fileName)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize();
+		fileSystem.File.WriteAllText(fileName, content, encoding);
+		FileInfoAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+
+		sut.HasContentMatching(content, encoding);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasContentMatching_OnlyPartOfContentWithoutWildcards_ShouldThrow(
+		string content, string fileName, string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName).Which(f => f.HasStringContent(content));
+		FileInfoAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+		string pattern = content.Substring(1);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasContentMatching(pattern, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileName}\" to match '{pattern}' {because}, but it did not.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasContentMatching_OnlyPartOfContentWithoutWildcards_WithEncoding_ShouldThrow(
+		Encoding encoding, string content, string fileName, string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize();
+		fileSystem.File.WriteAllText(fileName, content, encoding);
+		FileInfoAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+		string pattern = content.Substring(1);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasContentMatching(pattern, encoding, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileName}\" to match '{pattern}' {because}, but it did not.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasContentMatching_OnlyPartOfContentWithWildcard_ShouldNotThrow(
+		string content, string fileName)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName).Which(f => f.HasStringContent(content));
+		FileInfoAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+		string pattern = "*" + content.Substring(1);
+
+		sut.HasContentMatching(pattern);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasContentMatching_OnlyPartOfContentWithWildcard_WithEncoding_ShouldNotThrow(
+		Encoding encoding, string content, string fileName)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize();
+		fileSystem.File.WriteAllText(fileName, content, encoding);
+		FileInfoAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+		string pattern = "*" + content.Substring(1);
+
+		sut.HasContentMatching(pattern);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasContentMatching_WithEncodingMismatch_ShouldThrow(
+		string fileName, string because)
+	{
+		string content = "Dans mes rêves";
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize();
+		fileSystem.File.WriteAllText(fileName, content, Encoding.ASCII);
+		FileInfoAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+		string pattern = content;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasContentMatching(pattern, Encoding.Default, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileName}\" to match '{pattern}' {because}, but it did not.");
+	}
+
 	[Theory]
 	[AutoData]
 	public void IsNotReadOnly_WithReadOnlyFile_ShouldThrow(
