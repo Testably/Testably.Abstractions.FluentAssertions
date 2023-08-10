@@ -17,7 +17,7 @@ public class FileSystemAssertions :
 	/// <summary>
 	///     Asserts that a directory at <paramref name="path" /> exists in the file system.
 	/// </summary>
-	public AndWhichConstraint<FileSystemAssertions, DirectoryInfoAssertions> HaveDirectory(
+	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> HaveDirectory(
 		string path, string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
@@ -32,14 +32,14 @@ public class FileSystemAssertions :
 				"Expected {context} to contain directory {0}{reason}, but it did not exist.",
 				_ => path, directoryInfo => directoryInfo.Name);
 
-		return new AndWhichConstraint<FileSystemAssertions, DirectoryInfoAssertions>(this,
-			new DirectoryInfoAssertions(Subject.DirectoryInfo.New(path)));
+		return new AndWhichConstraint<FileSystemAssertions, DirectoryAssertions>(this,
+			new DirectoryAssertions(Subject.DirectoryInfo.New(path)));
 	}
 
 	/// <summary>
 	///     Asserts that a file at <paramref name="path" /> exists in the file system.
 	/// </summary>
-	public AndWhichConstraint<FileSystemAssertions, FileInfoAssertions> HaveFile(
+	public AndWhichConstraint<FileSystemAssertions, FileAssertions> HaveFile(
 		string path, string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
@@ -54,14 +54,14 @@ public class FileSystemAssertions :
 				"Expected {context} to contain file {0}{reason}, but it did not exist.",
 				_ => path, fileInfo => fileInfo.Name);
 
-		return new AndWhichConstraint<FileSystemAssertions, FileInfoAssertions>(this,
-			new FileInfoAssertions(Subject.FileInfo.New(path)));
+		return new AndWhichConstraint<FileSystemAssertions, FileAssertions>(this,
+			new FileAssertions(Subject.FileInfo.New(path)));
 	}
 
 	/// <summary>
 	///     Asserts that no directory at <paramref name="path" /> exists in the file system.
 	/// </summary>
-	public AndWhichConstraint<FileSystemAssertions, DirectoryInfoAssertions> NotHaveDirectory(
+	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> NotHaveDirectory(
 		string path, string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
@@ -77,14 +77,14 @@ public class FileSystemAssertions :
 				"Expected {context} to not contain directory {0}{reason}, but it did exist.",
 				_ => path, directoryInfo => directoryInfo.Name);
 
-		return new AndWhichConstraint<FileSystemAssertions, DirectoryInfoAssertions>(this,
-			new DirectoryInfoAssertions(Subject.DirectoryInfo.New(path)));
+		return new AndWhichConstraint<FileSystemAssertions, DirectoryAssertions>(this,
+			new DirectoryAssertions(Subject.DirectoryInfo.New(path)));
 	}
 
 	/// <summary>
 	///     Asserts that no file at <paramref name="path" /> exists in the file system.
 	/// </summary>
-	public AndWhichConstraint<FileSystemAssertions, FileInfoAssertions> NotHaveFile(
+	public AndWhichConstraint<FileSystemAssertions, FileAssertions> NotHaveFile(
 		string path, string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
@@ -100,7 +100,7 @@ public class FileSystemAssertions :
 				"Expected {context} to not contain file {0}{reason}, but it did exist.",
 				_ => path, fileInfo => fileInfo.Name);
 
-		return new AndWhichConstraint<FileSystemAssertions, FileInfoAssertions>(this,
-			new FileInfoAssertions(Subject.FileInfo.New(path)));
+		return new AndWhichConstraint<FileSystemAssertions, FileAssertions>(this,
+			new FileAssertions(Subject.FileInfo.New(path)));
 	}
 }

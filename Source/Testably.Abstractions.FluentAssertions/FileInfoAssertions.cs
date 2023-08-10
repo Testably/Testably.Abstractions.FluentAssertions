@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 
 namespace Testably.Abstractions.FluentAssertions;
 
@@ -19,7 +19,7 @@ public class FileInfoAssertions :
 	/// <summary>
 	///     Asserts that the current file is not read-only.
 	/// </summary>
-	public AndConstraint<FileInfoAssertions> IsNotReadOnly(
+	public AndConstraint<FileInfoAssertions> NotBeReadOnly(
 		string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
@@ -37,7 +37,7 @@ public class FileInfoAssertions :
 	/// <summary>
 	///     Asserts that the current file is read-only.
 	/// </summary>
-	public AndConstraint<FileInfoAssertions> IsReadOnly(
+	public AndConstraint<FileInfoAssertions> BeReadOnly(
 		string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
@@ -55,7 +55,7 @@ public class FileInfoAssertions :
 	/// <summary>
 	///     Asserts that the string content of the current file matches the <paramref name="pattern" />.
 	/// </summary>
-	public AndConstraint<FileInfoAssertions> HasContentMatching(
+	public AndConstraint<FileInfoAssertions> HaveContentMatching(
 		Match pattern, string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
@@ -75,7 +75,7 @@ public class FileInfoAssertions :
 	///     Asserts that the string content of the current file using the given <paramref name="encoding" />
 	///     matches the <paramref name="pattern" />.
 	/// </summary>
-	public AndConstraint<FileInfoAssertions> HasContentMatching(
+	public AndConstraint<FileInfoAssertions> HaveContentMatching(
 		Match pattern, Encoding encoding, string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion

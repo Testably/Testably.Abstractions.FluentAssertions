@@ -1,28 +1,26 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
 using System;
-using System.IO.Abstractions;
 using Testably.Abstractions.Testing;
 using Xunit;
 
 namespace Testably.Abstractions.FluentAssertions.Tests;
 
-public class DirectoryInfoAssertionsTests
+public class DirectoryAssertionsTests
 {
 	[Theory]
 	[InlineAutoData(null)]
 	[InlineAutoData("")]
-	public void HaveFileMatching_InvalidFileName_ShouldThrow(string? invalidFileName,
-		string because)
+	public void HasFileMatching_InvalidFileName_ShouldThrow(string? invalidFileName, string because)
 	{
 		MockFileSystem fileSystem = new();
 		fileSystem.Initialize()
 			.WithSubdirectory("foo");
-		IDirectoryInfo sut = fileSystem.DirectoryInfo.New("foo");
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory("foo").Which;
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveFileMatching(invalidFileName!, because);
+			sut.HasFileMatching(invalidFileName!, because);
 		});
 
 		exception.Should().NotBeNull();
@@ -32,7 +30,7 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveFileMatching_WithMatchingFile_ShouldNotThrow(
+	public void HasFileMatching_WithMatchingFile_ShouldNotThrow(
 		string directoryName,
 		string fileName)
 	{
@@ -40,14 +38,14 @@ public class DirectoryInfoAssertionsTests
 		fileSystem.Initialize()
 			.WithSubdirectory(directoryName).Initialized(d => d
 				.WithFile(fileName));
-		IDirectoryInfo sut = fileSystem.DirectoryInfo.New(directoryName);
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
 
-		sut.Should().HaveFileMatching(fileName);
+		sut.HasFileMatching(fileName);
 	}
 
 	[Theory]
 	[AutoData]
-	public void HaveFileMatching_WithoutMatchingFile_ShouldThrow(
+	public void HasFileMatching_WithoutMatchingFile_ShouldThrow(
 		string directoryName,
 		string fileName,
 		string because)
@@ -56,11 +54,11 @@ public class DirectoryInfoAssertionsTests
 		fileSystem.Initialize()
 			.WithSubdirectory(directoryName).Initialized(d => d
 				.WithFile("not-matching-file"));
-		IDirectoryInfo sut = fileSystem.DirectoryInfo.New(directoryName);
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveFileMatching(fileName, because);
+			sut.HasFileMatching(fileName, because);
 		});
 
 		exception.Should().NotBeNull();
