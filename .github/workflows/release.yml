@@ -238,8 +238,8 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          name: ${{GITHUB_REF#refs/heads/release/}}
-          tag_name: ${{GITHUB_REF#refs/heads/release/}}
+          name: ${GITHUB_REF#refs/heads/release/}
+          tag_name: ${GITHUB_REF#refs/heads/release/}
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
       - name: Comment relevant issues and merge requests
