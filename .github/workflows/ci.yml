@@ -45,7 +45,7 @@ jobs:
         shell: bash
         run: |
           version="0.4.3"
-          echo "release_version=0.4.3" >> "$GITHUB_ENV"
+          echo "release_version=$version" >> "$GITHUB_ENV"
       - name: Check version
         shell: bash
         run: |
@@ -53,8 +53,8 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          name: v$release_version
-          tag_name: v$release_version
+          name: v${{ release_version }}
+          tag_name: v${{ release_version }}
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
       - name: Checkout sources
