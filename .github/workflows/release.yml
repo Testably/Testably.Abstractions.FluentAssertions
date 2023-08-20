@@ -238,10 +238,16 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          name: ${GITHUB_REF#refs/heads/release/}
-          tag_name: ${GITHUB_REF#refs/heads/release/}
+          name: "${GITHUB_REF#refs/heads/release/}"
+          tag_name: "${GITHUB_REF#refs/heads/release/}"
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
+
+  cleanup:
+    name: Cleanup
+    runs-on: ubuntu-latest
+    needs: [deploy, stryker]
+    steps:
       - name: Comment relevant issues and merge requests
         uses: apexskier/github-release-commenter@v1.3.2
         with:
@@ -250,12 +256,6 @@ jobs:
             This is addressed in release {release_link}.
           label-template: |
             state: released
-
-  cleanup:
-    name: Cleanup
-    runs-on: ubuntu-latest
-    needs: [deploy, stryker]
-    steps:
       - name: Checkout sources
         uses: actions/checkout@v3
         with:
