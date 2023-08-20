@@ -45,7 +45,7 @@ jobs:
         shell: bash
         run: |
           version="0.4.3"
-          echo "release_version=$version" >> "$GITHUB_ENV"
+          echo "release_version=$version" >> "$GITHUB_OUTPUT"
       - name: Check version
         shell: bash
         run: |
