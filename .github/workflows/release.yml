@@ -234,7 +234,9 @@ jobs:
         shell: bash
         run: |
           version="${GITHUB_REF#refs/heads/release/}"
-          echo "release_version=${version}" >> "$GITHUB_ENV"
+          git tag "${version}"
+          git push origin "${version}"
+          echo "release_version=${version}" >> "$GITHUB_OUTPUT"
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
