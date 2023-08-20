@@ -200,6 +200,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Tag current commit
+        id: tag
         shell: bash
         run: |
           version="${GITHUB_REF#refs/heads/release/}"
@@ -239,8 +240,8 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          name: "$release_version"
-          tag_name: "$release_version"
+          name: ${{ steps.tag.outputs.release_version }}
+          tag_name: ${{ steps.tag.outputs.release_version }}
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
 
