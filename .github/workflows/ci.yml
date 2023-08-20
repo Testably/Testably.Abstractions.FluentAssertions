@@ -40,6 +40,19 @@ jobs:
     name: Test (Ubuntu)
     runs-on: ubuntu-latest
     steps:
+      - name: Detect version
+        id: tag
+        shell: bash
+        run: |
+          version="v0.4.3"
+          echo "release_version=${version}" >> "$GITHUB_ENV"
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "${{ steps.tag.outputs.release_version }}"
+          tag_name: "${{ steps.tag.outputs.release_version }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generate_release_notes: true
       - name: Checkout sources
         uses: actions/checkout@v3
         with:
