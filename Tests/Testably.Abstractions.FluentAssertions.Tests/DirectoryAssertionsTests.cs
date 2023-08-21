@@ -99,4 +99,89 @@ public class DirectoryAssertionsTests
 			.Be(
 				$"Expected directory \"{directoryName}\" to contain at least {expectedCount} files matching \"{fileNamePrefix}*\" {because}, but only {matchingCount} were found.");
 	}
+
+	[Theory]
+	[InlineAutoData(null)]
+	[InlineAutoData("")]
+	public void HasSingleFileMatching_InvalidFileName_ShouldThrow(string? invalidFileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory("foo");
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory("foo").Which;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasSingleFileMatching(invalidFileName!, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().NotBeNullOrEmpty();
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasSingleFileMatching_WithMatchingFile_ShouldNotThrow(
+		string directoryName,
+		string fileName)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory(directoryName).Initialized(d => d
+				.WithFile(fileName));
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
+
+		sut.HasSingleFileMatching(fileName);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasSingleFileMatching_WithMultipleMatchingFile_ShouldThrow(
+		string directoryName,
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory(directoryName).Initialized(d => d
+				.WithFile($"{fileName}-1.txt")
+				.WithFile($"{fileName}-2.txt"));
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasSingleFileMatching($"{fileName}*", because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected directory \"{directoryName}\" to contain exactly one file matching \"{fileName}*\" {because}, but found 2.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasSingleFileMatching_WithoutMatchingFile_ShouldThrow(
+		string directoryName,
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory(directoryName).Initialized(d => d
+				.WithFile("not-matching-file"));
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasSingleFileMatching(fileName, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected directory \"{directoryName}\" to contain exactly one file matching \"{fileName}\" {because}, but found 0.");
+	}
 }

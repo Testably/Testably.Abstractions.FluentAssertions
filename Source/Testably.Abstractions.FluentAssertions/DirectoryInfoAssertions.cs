@@ -23,4 +23,13 @@ public class DirectoryInfoAssertions :
 		new DirectoryAssertions(Subject).HasFileMatching(searchPattern, because, becauseArgs);
 		return new AndConstraint<DirectoryInfoAssertions>(this);
 	}
+
+	/// <summary>
+	///     Asserts that the directory contains exactly one file matching the given <paramref name="searchPattern" />.
+	/// </summary>
+	public AndWhichConstraint<FileSystemAssertions, FileAssertions> HaveSingleFile(
+		string searchPattern = "*", string because = "", params object[] becauseArgs)
+	{
+		return new DirectoryAssertions(Subject).HasSingleFileMatching(searchPattern, because, becauseArgs);
+	}
 }
