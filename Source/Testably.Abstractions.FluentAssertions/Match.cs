@@ -38,8 +38,8 @@ public abstract class Match
 
 	private sealed class WildcardMatch : Match
 	{
-		private readonly string _originalPattern;
 		private readonly bool _ignoreCase;
+		private readonly string _originalPattern;
 		private readonly string _pattern;
 
 		internal WildcardMatch(string pattern, bool ignoreCase)
