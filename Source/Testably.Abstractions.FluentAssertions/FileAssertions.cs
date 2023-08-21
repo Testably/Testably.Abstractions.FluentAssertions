@@ -7,12 +7,12 @@ namespace Testably.Abstractions.FluentAssertions;
 ///     Assertions on <see cref="IFileInfo" />.
 /// </summary>
 public class FileAssertions :
-	ReferenceTypeAssertions<IFileInfo, FileAssertions>
+	ReferenceTypeAssertions<IFileInfo?, FileAssertions>
 {
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "file";
 
-	internal FileAssertions(IFileInfo instance)
+	internal FileAssertions(IFileInfo? instance)
 		: base(instance)
 	{
 	}
@@ -26,13 +26,17 @@ public class FileAssertions :
 		Execute.Assertion
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
-			.Given(() => Subject)
+			.ForCondition(Subject != null)
+			.FailWith(
+				"You can't assert the content of a file if the FileInfo is null")
+			.Then
+			.Given(() => Subject!)
 			.ForCondition(fileInfo => fileInfo.FileSystem.File
 				.ReadAllBytes(fileInfo.FullName)
 				.SequenceEqual(bytes))
 			.FailWith(
 				"Expected {context} {0} to match '{1}'{reason}, but it did not.",
-				_ => Subject.Name, _ => bytes);
+				fileInfo => fileInfo.Name, _ => bytes);
 
 		return new AndConstraint<FileAssertions>(this);
 	}
@@ -46,12 +50,16 @@ public class FileAssertions :
 		Execute.Assertion
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
-			.Given(() => Subject)
+			.ForCondition(Subject != null)
+			.FailWith(
+				"You can't assert the content of a file if the FileInfo is null")
+			.Then
+			.Given(() => Subject!)
 			.ForCondition(fileInfo => pattern.Matches(
 				fileInfo.FileSystem.File.ReadAllText(fileInfo.FullName)))
 			.FailWith(
 				"Expected {context} {0} to match '{1}'{reason}, but it did not.",
-				_ => Subject.Name, _ => pattern);
+				fileInfo => fileInfo.Name, _ => pattern);
 
 		return new AndConstraint<FileAssertions>(this);
 	}
@@ -66,12 +74,16 @@ public class FileAssertions :
 		Execute.Assertion
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
-			.Given(() => Subject)
+			.ForCondition(Subject != null)
+			.FailWith(
+				"You can't assert the content of a file if the FileInfo is null")
+			.Then
+			.Given(() => Subject!)
 			.ForCondition(fileInfo => pattern.Matches(
 				fileInfo.FileSystem.File.ReadAllText(fileInfo.FullName, encoding)))
 			.FailWith(
 				"Expected {context} {0} to match '{1}'{reason}, but it did not.",
-				_ => Subject.Name, _ => pattern);
+				fileInfo => fileInfo.Name, _ => pattern);
 
 		return new AndConstraint<FileAssertions>(this);
 	}
@@ -85,11 +97,15 @@ public class FileAssertions :
 		Execute.Assertion
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
-			.Given(() => Subject)
+			.ForCondition(Subject != null)
+			.FailWith(
+				"You can't assert that the file is not read-only if the FileInfo is null")
+			.Then
+			.Given(() => Subject!)
 			.ForCondition(fileInfo => !fileInfo.IsReadOnly)
 			.FailWith(
 				"Expected {context} {0} not to be read-only{reason}, but it was.",
-				_ => Subject.Name);
+				fileInfo => fileInfo.Name);
 
 		return new AndConstraint<FileAssertions>(this);
 	}
@@ -103,11 +119,15 @@ public class FileAssertions :
 		Execute.Assertion
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
-			.Given(() => Subject)
+			.ForCondition(Subject != null)
+			.FailWith(
+				"You can't assert that the file is read-only if the FileInfo is null")
+			.Then
+			.Given(() => Subject!)
 			.ForCondition(fileInfo => fileInfo.IsReadOnly)
 			.FailWith(
 				"Expected {context} {0} to be read-only{reason}, but it was not.",
-				_ => Subject.Name);
+				fileInfo => fileInfo.Name);
 
 		return new AndConstraint<FileAssertions>(this);
 	}

@@ -9,14 +9,14 @@ public static class FileSystemExtensions
 	///     Returns a <see cref="DirectoryAssertions" /> object that can be used to
 	///     assert the current <see cref="IDirectoryInfo" />.
 	/// </summary>
-	public static DirectoryInfoAssertions Should(this IDirectoryInfo instance)
+	public static DirectoryInfoAssertions Should(this IDirectoryInfo? instance)
 		=> new(instance);
 
 	/// <summary>
 	///     Returns a <see cref="FileAssertions" /> object that can be used to
 	///     assert the current <see cref="IFileInfo" />.
 	/// </summary>
-	public static FileInfoAssertions Should(this IFileInfo instance)
+	public static FileInfoAssertions Should(this IFileInfo? instance)
 		=> new(instance);
 
 	/// <summary>
