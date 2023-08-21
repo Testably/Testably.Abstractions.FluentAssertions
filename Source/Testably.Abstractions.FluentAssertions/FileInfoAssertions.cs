@@ -1,3 +1,4 @@
+using System.IO;
 using System.Text;
 
 namespace Testably.Abstractions.FluentAssertions;
@@ -23,6 +24,16 @@ public class FileInfoAssertions :
 		string because = "", params object[] becauseArgs)
 	{
 		new FileAssertions(Subject).IsReadOnly(because, becauseArgs);
+		return new AndConstraint<FileInfoAssertions>(this);
+	}
+
+	/// <summary>
+	///     Asserts that the current file has the given <paramref name="attribute" />.
+	/// </summary>
+	public AndConstraint<FileInfoAssertions> HaveAttribute(
+		FileAttributes attribute, string because = "", params object[] becauseArgs)
+	{
+		new FileAssertions(Subject).HasAttribute(attribute, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -64,6 +75,16 @@ public class FileInfoAssertions :
 		string because = "", params object[] becauseArgs)
 	{
 		new FileAssertions(Subject).IsNotReadOnly(because, becauseArgs);
+		return new AndConstraint<FileInfoAssertions>(this);
+	}
+
+	/// <summary>
+	///     Asserts that the current file does not have the given <paramref name="attribute" />.
+	/// </summary>
+	public AndConstraint<FileInfoAssertions> NotHaveAttribute(
+		FileAttributes attribute, string because = "", params object[] becauseArgs)
+	{
+		new FileAssertions(Subject).DoesNotHaveAttribute(attribute, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 }

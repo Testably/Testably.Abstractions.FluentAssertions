@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
 using System;
+using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Text;
@@ -62,6 +63,58 @@ public class FileInfoAssertionsTests
 		exception!.Message.Should()
 			.Be(
 				$"Expected file \"{fileDescription.Name}\" to be read-only {because}, but it was not.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void HaveAttribute_Null_ShouldThrow(string because)
+	{
+		IFileInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().HaveAttribute(FileAttributes.ReadOnly, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HaveAttribute_WithAttribute_ShouldNotThrow(FileDescription fileDescription)
+	{
+		fileDescription.IsReadOnly = true;
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.With(fileDescription);
+		IFileInfo sut = fileSystem.FileInfo.New(fileDescription.Name);
+
+		sut.Should().HaveAttribute(FileAttributes.ReadOnly);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HaveAttribute_WithoutAttribute_ShouldThrow(
+		FileDescription fileDescription,
+		string because)
+	{
+		fileDescription.IsReadOnly = false;
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.With(fileDescription);
+		IFileInfo sut = fileSystem.FileInfo.New(fileDescription.Name);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().HaveAttribute(FileAttributes.ReadOnly, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileDescription.Name}\" to have attribute {FileAttributes.ReadOnly} {because}, but it did not.");
 	}
 
 	[Theory]
@@ -319,5 +372,57 @@ public class FileInfoAssertionsTests
 		IFileInfo sut = fileSystem.FileInfo.New(fileDescription.Name);
 
 		sut.Should().NotBeReadOnly();
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveAttribute_Null_ShouldThrow(string because)
+	{
+		IFileInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().NotHaveAttribute(FileAttributes.ReadOnly, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveAttribute_WithAttribute_ShouldThrow(
+		FileDescription fileDescription,
+		string because)
+	{
+		fileDescription.IsReadOnly = true;
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.With(fileDescription);
+		IFileInfo sut = fileSystem.FileInfo.New(fileDescription.Name);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().NotHaveAttribute(FileAttributes.ReadOnly, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileDescription.Name}\" not to have attribute {FileAttributes.ReadOnly} {because}, but it did.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotHaveAttribute_WithoutAttribute_ShouldNotThrow(FileDescription fileDescription)
+	{
+		fileDescription.IsReadOnly = false;
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.With(fileDescription);
+		IFileInfo sut = fileSystem.FileInfo.New(fileDescription.Name);
+
+		sut.Should().NotHaveAttribute(FileAttributes.ReadOnly);
 	}
 }
