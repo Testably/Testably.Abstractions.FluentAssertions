@@ -32,6 +32,22 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
+	public void HaveFileMatching_Null_ShouldThrow(string because)
+	{
+		IDirectoryInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().HaveFileMatching(because: because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
 	public void HaveFileMatching_WithMatchingFile_ShouldNotThrow(
 		string directoryName,
 		string fileName)
