@@ -30,6 +30,6 @@ public class DirectoryInfoAssertions :
 	public AndWhichConstraint<FileSystemAssertions, FileAssertions> HaveSingleFile(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
-		return new DirectoryAssertions(Subject).HasSingleFile(searchPattern, because, becauseArgs);
+		return new DirectoryAssertions(Subject).HasSingleFileMatching(searchPattern, because, becauseArgs);
 	}
 }

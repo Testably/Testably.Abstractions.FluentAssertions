@@ -19,7 +19,7 @@ public class DirectoryAssertions :
 	/// <summary>
 	///     Asserts that the directory contains exactly one file matching the given <paramref name="searchPattern"/>.
 	/// </summary>
-	public AndWhichConstraint<FileSystemAssertions, FileAssertions> HasSingleFile(
+	public AndWhichConstraint<FileSystemAssertions, FileAssertions> HasSingleFileMatching(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
