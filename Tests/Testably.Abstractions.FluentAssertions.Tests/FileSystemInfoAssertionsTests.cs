@@ -11,6 +11,22 @@ public class FileSystemInfoAssertionsTests
 {
 	[Theory]
 	[AutoData]
+	public void Exist_ForDirectoryInfo_Null_ShouldThrow(string because)
+	{
+		IDirectoryInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().Exist(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
 	public void Exist_ForDirectoryInfo_WithCorrectDirectory_ShouldNotThrow(string directoryName)
 	{
 		MockFileSystem fileSystem = new();
@@ -61,6 +77,22 @@ public class FileSystemInfoAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be($"Expected directory \"{fileName}\" to exist {because}, but it did not.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void Exist_ForFileInfo_Null_ShouldThrow(string because)
+	{
+		IFileInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().Exist(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
 	}
 
 	[Theory]

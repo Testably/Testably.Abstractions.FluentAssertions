@@ -14,6 +14,22 @@ public class FileInfoAssertionsTests
 {
 	[Theory]
 	[AutoData]
+	public void BeReadOnly_Null_ShouldThrow(string because)
+	{
+		IFileInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().BeReadOnly(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
 	public void BeReadOnly_WithReadOnlyFile_ShouldNotThrow(FileDescription fileDescription)
 	{
 		fileDescription.IsReadOnly = true;
@@ -59,6 +75,22 @@ public class FileInfoAssertionsTests
 		IFileInfo sut = fileSystem.FileInfo.New(fileName);
 
 		sut.Should().HaveContent(bytes);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HaveContent_Bytes_Null_ShouldThrow(byte[] bytes, string because)
+	{
+		IFileInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().HaveContent(bytes, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
 	}
 
 	[Theory]
@@ -183,6 +215,39 @@ public class FileInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
+	public void HaveContent_StringContent_Null_ShouldThrow(string content, string because)
+	{
+		IFileInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().HaveContent(content, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HaveContent_StringContent_WithEncoding_Null_ShouldThrow(
+		Encoding encoding, string content, string because)
+	{
+		IFileInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().HaveContent(content, encoding, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
 	public void HaveContent_WithEncodingMismatch_ShouldThrow(
 		string fileName, string because)
 	{
@@ -202,6 +267,22 @@ public class FileInfoAssertionsTests
 		exception!.Message.Should()
 			.Be(
 				$"Expected file \"{fileName}\" to match '{pattern}' {because}, but it did not.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotBeReadOnly_Null_ShouldThrow(string because)
+	{
+		IFileInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().NotBeReadOnly(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
 	}
 
 	[Theory]
