@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Testably.Abstractions.FluentAssertions;
@@ -15,6 +16,50 @@ public class FileAssertions :
 	internal FileAssertions(IFileInfo? instance)
 		: base(instance)
 	{
+	}
+
+	/// <summary>
+	///     Asserts that the current file does not have the given <paramref name="attribute" />.
+	/// </summary>
+	public AndConstraint<FileAssertions> DoesNotHaveAttribute(
+		FileAttributes attribute, string because = "", params object[] becauseArgs)
+	{
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.ForCondition(Subject != null)
+			.FailWith(
+				$"You can't assert that the file does not have attribute {attribute} if it is null")
+			.Then
+			.Given(() => Subject!)
+			.ForCondition(fileInfo => !fileInfo.Attributes.HasFlag(attribute))
+			.FailWith(
+				$"Expected {{context}} {{0}} not to have attribute {attribute}{{reason}}, but it did.",
+				fileInfo => fileInfo.Name);
+
+		return new AndConstraint<FileAssertions>(this);
+	}
+
+	/// <summary>
+	///     Asserts that the current file has the given <paramref name="attribute" />.
+	/// </summary>
+	public AndConstraint<FileAssertions> HasAttribute(
+		FileAttributes attribute, string because = "", params object[] becauseArgs)
+	{
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.ForCondition(Subject != null)
+			.FailWith(
+				$"You can't assert that the file has attribute {attribute} if it is null")
+			.Then
+			.Given(() => Subject!)
+			.ForCondition(fileInfo => fileInfo.Attributes.HasFlag(attribute))
+			.FailWith(
+				$"Expected {{context}} {{0}} to have attribute {attribute}{{reason}}, but it did not.",
+				fileInfo => fileInfo.Name);
+
+		return new AndConstraint<FileAssertions>(this);
 	}
 
 	/// <summary>
@@ -99,7 +144,7 @@ public class FileAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert that the file is not read-only if the FileInfo is null")
+				"You can't assert that the file is not read-only if it is null")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(fileInfo => !fileInfo.IsReadOnly)
@@ -121,7 +166,7 @@ public class FileAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert that the file is read-only if the FileInfo is null")
+				"You can't assert that the file is read-only if it is null")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(fileInfo => fileInfo.IsReadOnly)
