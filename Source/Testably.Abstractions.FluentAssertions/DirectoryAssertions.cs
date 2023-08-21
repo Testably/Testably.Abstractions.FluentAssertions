@@ -26,7 +26,9 @@ public class DirectoryAssertions :
 	///     <paramref name="searchPattern" />.
 	/// </summary>
 	public AndConstraint<DirectoryAssertions> HasFilesMatching(
-		string searchPattern = "*", int minimumCount = 1, string because = "",
+		string searchPattern = "*",
+		int minimumCount = 1,
+		string because = "",
 		params object[] becauseArgs)
 	{
 		Execute.Assertion
