@@ -57,46 +57,6 @@ public class DirectoryAssertions :
 		=> HasDirectories(searchPattern, 1, because, becauseArgs);
 
 	/// <summary>
-	///     Asserts that the current directory has at least one file which matches the <paramref name="searchPattern" />.
-	/// </summary>
-	public AndConstraint<DirectoryAssertions> HasFiles(
-		string searchPattern = "*", string because = "", params object[] becauseArgs)
-		=> HasFiles(searchPattern, 1, because, becauseArgs);
-
-	/// <summary>
-	///     Asserts that the current directory has at least <paramref name="minimumCount" /> files which match the
-	///     <paramref name="searchPattern" />.
-	/// </summary>
-	public AndConstraint<DirectoryAssertions> HasFiles(
-		string searchPattern,
-		int minimumCount,
-		string because = "",
-		params object[] becauseArgs)
-	{
-		Execute.Assertion
-			.WithDefaultIdentifier(Identifier)
-			.BecauseOf(because, becauseArgs)
-			.ForCondition(Subject != null)
-			.FailWith(
-				"You can't assert a directory having files if the DirectoryInfo is null.")
-			.Then
-			.ForCondition(!string.IsNullOrEmpty(searchPattern))
-			.FailWith(
-				"You can't assert a directory having files if you don't pass a proper search pattern.")
-			.Then
-			.Given(() => Subject!)
-			.ForCondition(directoryInfo
-				=> directoryInfo.GetFiles(searchPattern).Length >= minimumCount)
-			.FailWith(
-				$"Expected {{context}} {{1}} to contain at least {(minimumCount == 1 ? "one file" : $"{minimumCount} files")} matching {{0}}{{reason}}, but {(minimumCount == 1 ? "none was" : "only {2} were")} found.",
-				_ => searchPattern,
-				directoryInfo => directoryInfo.Name,
-				directoryInfo => directoryInfo.GetFiles(searchPattern).Length);
-
-		return new AndConstraint<DirectoryAssertions>(this);
-	}
-
-	/// <summary>
 	///     Asserts that the directory contains exactly one directory matching the given <paramref name="searchPattern" />.
 	/// </summary>
 	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> HasDirectory(
@@ -156,5 +116,45 @@ public class DirectoryAssertions :
 		return new AndWhichConstraint<FileSystemAssertions, FileAssertions>(
 			new FileSystemAssertions(Subject!.FileSystem),
 			new FileAssertions(Subject!.GetFiles(searchPattern).Single()));
+	}
+
+	/// <summary>
+	///     Asserts that the current directory has at least one file which matches the <paramref name="searchPattern" />.
+	/// </summary>
+	public AndConstraint<DirectoryAssertions> HasFiles(
+		string searchPattern = "*", string because = "", params object[] becauseArgs)
+		=> HasFiles(searchPattern, 1, because, becauseArgs);
+
+	/// <summary>
+	///     Asserts that the current directory has at least <paramref name="minimumCount" /> files which match the
+	///     <paramref name="searchPattern" />.
+	/// </summary>
+	public AndConstraint<DirectoryAssertions> HasFiles(
+		string searchPattern,
+		int minimumCount,
+		string because = "",
+		params object[] becauseArgs)
+	{
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.ForCondition(Subject != null)
+			.FailWith(
+				"You can't assert a directory having files if the DirectoryInfo is null.")
+			.Then
+			.ForCondition(!string.IsNullOrEmpty(searchPattern))
+			.FailWith(
+				"You can't assert a directory having files if you don't pass a proper search pattern.")
+			.Then
+			.Given(() => Subject!)
+			.ForCondition(directoryInfo
+				=> directoryInfo.GetFiles(searchPattern).Length >= minimumCount)
+			.FailWith(
+				$"Expected {{context}} {{1}} to contain at least {(minimumCount == 1 ? "one file" : $"{minimumCount} files")} matching {{0}}{{reason}}, but {(minimumCount == 1 ? "none was" : "only {2} were")} found.",
+				_ => searchPattern,
+				directoryInfo => directoryInfo.Name,
+				directoryInfo => directoryInfo.GetFiles(searchPattern).Length);
+
+		return new AndConstraint<DirectoryAssertions>(this);
 	}
 }

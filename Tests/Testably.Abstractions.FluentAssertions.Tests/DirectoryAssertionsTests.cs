@@ -9,38 +9,6 @@ namespace Testably.Abstractions.FluentAssertions.Tests;
 public class DirectoryAssertionsTests
 {
 	[Theory]
-	[InlineAutoData(3, 5)]
-	[InlineAutoData(1, 2)]
-	public void HasDirectories_WithoutTooLittleDirectories_ShouldThrow(
-		int matchingCount,
-		int expectedCount,
-		string directoryName,
-		string directoryNamePrefix,
-		string because)
-	{
-		MockFileSystem fileSystem = new();
-		fileSystem.Initialize()
-			.WithSubdirectory(directoryName);
-		for (int i = 0; i < matchingCount; i++)
-		{
-			fileSystem.Directory.CreateDirectory(
-				fileSystem.Path.Combine(directoryName, $"{directoryNamePrefix}-{i}"));
-		}
-
-		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
-
-		Exception? exception = Record.Exception(() =>
-		{
-			sut.HasDirectories($"{directoryNamePrefix}*", expectedCount, because);
-		});
-
-		exception.Should().NotBeNull();
-		exception!.Message.Should()
-			.Be(
-				$"Expected directory \"{directoryName}\" to contain at least {expectedCount} directories matching \"{directoryNamePrefix}*\" {because}, but only {matchingCount} were found.");
-	}
-
-	[Theory]
 	[InlineAutoData(null)]
 	[InlineAutoData("")]
 	public void HasDirectories_InvalidDirectoryName_ShouldThrow(string? invalidDirectoryName,
@@ -101,72 +69,13 @@ public class DirectoryAssertionsTests
 	}
 
 	[Theory]
-	[InlineAutoData(null)]
-	[InlineAutoData("")]
-	public void HasFiles_InvalidFileName_ShouldThrow(string? invalidFileName, string because)
-	{
-		MockFileSystem fileSystem = new();
-		fileSystem.Initialize()
-			.WithSubdirectory("foo");
-		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory("foo").Which;
-
-		Exception? exception = Record.Exception(() =>
-		{
-			sut.HasFiles(invalidFileName!, because);
-		});
-
-		exception.Should().NotBeNull();
-		exception!.Message.Should().NotBeNullOrEmpty();
-		exception.Message.Should().NotContain(because);
-	}
-
-	[Theory]
-	[AutoData]
-	public void HasFiles_WithMatchingFile_ShouldNotThrow(
-		string directoryName,
-		string fileName)
-	{
-		MockFileSystem fileSystem = new();
-		fileSystem.Initialize()
-			.WithSubdirectory(directoryName).Initialized(d => d
-				.WithFile(fileName));
-		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
-
-		sut.HasFiles(fileName);
-	}
-
-	[Theory]
-	[AutoData]
-	public void HasFiles_WithoutMatchingFile_ShouldThrow(
-		string directoryName,
-		string fileName,
-		string because)
-	{
-		MockFileSystem fileSystem = new();
-		fileSystem.Initialize()
-			.WithSubdirectory(directoryName).Initialized(d => d
-				.WithFile("not-matching-file"));
-		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
-
-		Exception? exception = Record.Exception(() =>
-		{
-			sut.HasFiles(fileName, because);
-		});
-
-		exception.Should().NotBeNull();
-		exception!.Message.Should()
-			.Be(
-				$"Expected directory \"{directoryName}\" to contain at least one file matching \"{fileName}\" {because}, but none was found.");
-	}
-
-	[Theory]
 	[InlineAutoData(3, 5)]
 	[InlineAutoData(1, 2)]
-	public void HasFiles_WithoutTooLittleFiles_ShouldThrow(
+	public void HasDirectories_WithoutTooLittleDirectories_ShouldThrow(
 		int matchingCount,
 		int expectedCount,
 		string directoryName,
-		string fileNamePrefix,
+		string directoryNamePrefix,
 		string because)
 	{
 		MockFileSystem fileSystem = new();
@@ -174,22 +83,21 @@ public class DirectoryAssertionsTests
 			.WithSubdirectory(directoryName);
 		for (int i = 0; i < matchingCount; i++)
 		{
-			fileSystem.File.WriteAllText(
-				fileSystem.Path.Combine(directoryName, $"{fileNamePrefix}-{i}.txt"),
-				"some content");
+			fileSystem.Directory.CreateDirectory(
+				fileSystem.Path.Combine(directoryName, $"{directoryNamePrefix}-{i}"));
 		}
 
 		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.HasFiles($"{fileNamePrefix}*", expectedCount, because);
+			sut.HasDirectories($"{directoryNamePrefix}*", expectedCount, because);
 		});
 
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected directory \"{directoryName}\" to contain at least {expectedCount} files matching \"{fileNamePrefix}*\" {because}, but only {matchingCount} were found.");
+				$"Expected directory \"{directoryName}\" to contain at least {expectedCount} directories matching \"{directoryNamePrefix}*\" {because}, but only {matchingCount} were found.");
 	}
 
 	[Theory]
@@ -361,5 +269,97 @@ public class DirectoryAssertionsTests
 		exception!.Message.Should()
 			.Be(
 				$"Expected directory \"{directoryName}\" to contain exactly one file matching \"{fileName}\" {because}, but found 0.");
+	}
+
+	[Theory]
+	[InlineAutoData(null)]
+	[InlineAutoData("")]
+	public void HasFiles_InvalidFileName_ShouldThrow(string? invalidFileName, string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory("foo");
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory("foo").Which;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasFiles(invalidFileName!, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().NotBeNullOrEmpty();
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasFiles_WithMatchingFile_ShouldNotThrow(
+		string directoryName,
+		string fileName)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory(directoryName).Initialized(d => d
+				.WithFile(fileName));
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
+
+		sut.HasFiles(fileName);
+	}
+
+	[Theory]
+	[AutoData]
+	public void HasFiles_WithoutMatchingFile_ShouldThrow(
+		string directoryName,
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory(directoryName).Initialized(d => d
+				.WithFile("not-matching-file"));
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasFiles(fileName, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected directory \"{directoryName}\" to contain at least one file matching \"{fileName}\" {because}, but none was found.");
+	}
+
+	[Theory]
+	[InlineAutoData(3, 5)]
+	[InlineAutoData(1, 2)]
+	public void HasFiles_WithoutTooLittleFiles_ShouldThrow(
+		int matchingCount,
+		int expectedCount,
+		string directoryName,
+		string fileNamePrefix,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectory(directoryName);
+		for (int i = 0; i < matchingCount; i++)
+		{
+			fileSystem.File.WriteAllText(
+				fileSystem.Path.Combine(directoryName, $"{fileNamePrefix}-{i}.txt"),
+				"some content");
+		}
+
+		DirectoryAssertions? sut = fileSystem.Should().HaveDirectory(directoryName).Which;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasFiles($"{fileNamePrefix}*", expectedCount, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected directory \"{directoryName}\" to contain at least {expectedCount} files matching \"{fileNamePrefix}*\" {because}, but only {matchingCount} were found.");
 	}
 }

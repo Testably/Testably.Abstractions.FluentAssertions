@@ -25,16 +25,6 @@ public class DirectoryInfoAssertions :
 	}
 
 	/// <summary>
-	///     Asserts that the current directory has at least one file which matches the <paramref name="searchPattern" />.
-	/// </summary>
-	public AndConstraint<DirectoryInfoAssertions> HaveFiles(
-		string searchPattern = "*", string because = "", params object[] becauseArgs)
-	{
-		new DirectoryAssertions(Subject).HasFiles(searchPattern, because, becauseArgs);
-		return new AndConstraint<DirectoryInfoAssertions>(this);
-	}
-
-	/// <summary>
 	///     Asserts that the directory contains exactly one directory matching the given <paramref name="searchPattern" />.
 	/// </summary>
 	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> HaveDirectory(
@@ -52,5 +42,15 @@ public class DirectoryInfoAssertions :
 	{
 		return new DirectoryAssertions(Subject).HasFile(searchPattern, because,
 			becauseArgs);
+	}
+
+	/// <summary>
+	///     Asserts that the current directory has at least one file which matches the <paramref name="searchPattern" />.
+	/// </summary>
+	public AndConstraint<DirectoryInfoAssertions> HaveFiles(
+		string searchPattern = "*", string because = "", params object[] becauseArgs)
+	{
+		new DirectoryAssertions(Subject).HasFiles(searchPattern, because, becauseArgs);
+		return new AndConstraint<DirectoryInfoAssertions>(this);
 	}
 }
