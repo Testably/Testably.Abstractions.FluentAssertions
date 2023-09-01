@@ -29,7 +29,7 @@ public class FileAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				$"You can't assert that the file does not have attribute {attribute} if it is null")
+				$"You can't assert that the file does not have attribute {attribute} if it is null.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(fileInfo => !fileInfo.Attributes.HasFlag(attribute))
@@ -51,7 +51,7 @@ public class FileAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				$"You can't assert that the file has attribute {attribute} if it is null")
+				$"You can't assert that the file has attribute {attribute} if it is null.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(fileInfo => fileInfo.Attributes.HasFlag(attribute))
@@ -73,7 +73,7 @@ public class FileAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert the content of a file if the FileInfo is null")
+				"You can't assert the content of a file if the FileInfo is null.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(fileInfo => fileInfo.FileSystem.File
@@ -97,7 +97,7 @@ public class FileAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert the content of a file if the FileInfo is null")
+				"You can't assert the content of a file if the FileInfo is null.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(fileInfo => pattern.Matches(
@@ -121,7 +121,7 @@ public class FileAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert the content of a file if the FileInfo is null")
+				"You can't assert the content of a file if the FileInfo is null.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(fileInfo => pattern.Matches(
@@ -144,7 +144,7 @@ public class FileAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert that the file is not read-only if it is null")
+				"You can't assert that the file is not read-only if it is null.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(fileInfo => !fileInfo.IsReadOnly)
@@ -166,7 +166,7 @@ public class FileAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert that the file is read-only if it is null")
+				"You can't assert that the file is read-only if it is null.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(fileInfo => fileInfo.IsReadOnly)

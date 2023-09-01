@@ -31,11 +31,11 @@ public class DirectoryAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert a directory having directories if the DirectoryInfo is null")
+				"You can't assert a directory having directories if the DirectoryInfo is null.")
 			.Then
 			.ForCondition(!string.IsNullOrEmpty(searchPattern))
 			.FailWith(
-				"You can't assert a directory having directories if you don't pass a proper name")
+				"You can't assert a directory having directories if you don't pass a proper search pattern.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(directoryInfo
@@ -78,11 +78,11 @@ public class DirectoryAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert a directory having files if the DirectoryInfo is null")
+				"You can't assert a directory having files if the DirectoryInfo is null.")
 			.Then
 			.ForCondition(!string.IsNullOrEmpty(searchPattern))
 			.FailWith(
-				"You can't assert a directory having files if you don't pass a proper name")
+				"You can't assert a directory having files if you don't pass a proper search pattern.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(directoryInfo
@@ -107,11 +107,11 @@ public class DirectoryAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert a directory having a given directory if it is null")
+				"You can't assert a directory having a given directory if it is null.")
 			.Then
 			.ForCondition(!string.IsNullOrEmpty(searchPattern))
 			.FailWith(
-				"You can't assert a directory having a given directory if you don't pass a proper name")
+				"You can't assert a directory having a given directory if you don't pass a proper search pattern.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(directoryInfo
@@ -138,11 +138,11 @@ public class DirectoryAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
 			.FailWith(
-				"You can't assert a directory having a given file if it is null")
+				"You can't assert a directory having a given file if it is null.")
 			.Then
 			.ForCondition(!string.IsNullOrEmpty(searchPattern))
 			.FailWith(
-				"You can't assert a directory having a given file if you don't pass a proper name")
+				"You can't assert a directory having a given file if you don't pass a proper search pattern.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(directoryInfo
