@@ -29,7 +29,7 @@ This library is an extension to [FluentAssertions](https://github.com/fluentasse
    or
    ```csharp
    IDirectoryInfo directoryInfo = fileSystem.DirectoryInfo.New(".");
-   directoryInfo.Should().HaveSingleDirectory("foo");
+   directoryInfo.Should().HaveDirectory("foo");
    ```
 
 3. Verify, that the file "foo.txt" has text content "bar":

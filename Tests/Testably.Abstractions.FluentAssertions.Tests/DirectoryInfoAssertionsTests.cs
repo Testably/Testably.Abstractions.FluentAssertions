@@ -12,7 +12,7 @@ public class DirectoryInfoAssertionsTests
 	[Theory]
 	[InlineAutoData(null)]
 	[InlineAutoData("")]
-	public void HaveDirectoryMatching_InvalidDirectoryName_ShouldThrow(string? invalidDirectoryName,
+	public void HaveDirectories_InvalidDirectoryName_ShouldThrow(string? invalidDirectoryName,
 		string because)
 	{
 		MockFileSystem fileSystem = new();
@@ -22,7 +22,7 @@ public class DirectoryInfoAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveDirectoryMatching(invalidDirectoryName!, because);
+			sut.Should().HaveDirectories(invalidDirectoryName!, because);
 		});
 
 		exception.Should().NotBeNull();
@@ -32,13 +32,13 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveDirectoryMatching_Null_ShouldThrow(string because)
+	public void HaveDirectories_Null_ShouldThrow(string because)
 	{
 		IDirectoryInfo? sut = null;
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveDirectoryMatching(because: because);
+			sut.Should().HaveDirectories(because: because);
 		});
 
 		exception.Should().NotBeNull();
@@ -48,7 +48,7 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveDirectoryMatching_WithMatchingDirectory_ShouldNotThrow(
+	public void HaveDirectories_WithMatchingDirectory_ShouldNotThrow(
 		string directoryName,
 		string subdirectoryName)
 	{
@@ -58,12 +58,12 @@ public class DirectoryInfoAssertionsTests
 				.WithSubdirectory(subdirectoryName));
 		IDirectoryInfo sut = fileSystem.DirectoryInfo.New(directoryName);
 
-		sut.Should().HaveDirectoryMatching(subdirectoryName);
+		sut.Should().HaveDirectories(subdirectoryName);
 	}
 
 	[Theory]
 	[AutoData]
-	public void HaveDirectoryMatching_WithoutMatchingDirectory_ShouldThrow(
+	public void HaveDirectories_WithoutMatchingDirectory_ShouldThrow(
 		string directoryName,
 		string subdirectoryName,
 		string because)
@@ -76,7 +76,7 @@ public class DirectoryInfoAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveDirectoryMatching(subdirectoryName, because);
+			sut.Should().HaveDirectories(subdirectoryName, because);
 		});
 
 		exception.Should().NotBeNull();
@@ -88,7 +88,7 @@ public class DirectoryInfoAssertionsTests
 	[Theory]
 	[InlineAutoData(null)]
 	[InlineAutoData("")]
-	public void HaveFileMatching_InvalidFileName_ShouldThrow(string? invalidFileName,
+	public void HaveFiles_InvalidFileName_ShouldThrow(string? invalidFileName,
 		string because)
 	{
 		MockFileSystem fileSystem = new();
@@ -98,7 +98,7 @@ public class DirectoryInfoAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveFileMatching(invalidFileName!, because);
+			sut.Should().HaveFiles(invalidFileName!, because);
 		});
 
 		exception.Should().NotBeNull();
@@ -108,13 +108,13 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveFileMatching_Null_ShouldThrow(string because)
+	public void HaveFiles_Null_ShouldThrow(string because)
 	{
 		IDirectoryInfo? sut = null;
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveFileMatching(because: because);
+			sut.Should().HaveFiles(because: because);
 		});
 
 		exception.Should().NotBeNull();
@@ -124,7 +124,7 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveFileMatching_WithMatchingFile_ShouldNotThrow(
+	public void HaveFiles_WithMatchingFile_ShouldNotThrow(
 		string directoryName,
 		string fileName)
 	{
@@ -134,12 +134,12 @@ public class DirectoryInfoAssertionsTests
 				.WithFile(fileName));
 		IDirectoryInfo sut = fileSystem.DirectoryInfo.New(directoryName);
 
-		sut.Should().HaveFileMatching(fileName);
+		sut.Should().HaveFiles(fileName);
 	}
 
 	[Theory]
 	[AutoData]
-	public void HaveFileMatching_WithoutMatchingFile_ShouldThrow(
+	public void HaveFiles_WithoutMatchingFile_ShouldThrow(
 		string directoryName,
 		string fileName,
 		string because)
@@ -152,7 +152,7 @@ public class DirectoryInfoAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveFileMatching(fileName, because);
+			sut.Should().HaveFiles(fileName, because);
 		});
 
 		exception.Should().NotBeNull();
@@ -164,7 +164,7 @@ public class DirectoryInfoAssertionsTests
 	[Theory]
 	[InlineAutoData(null)]
 	[InlineAutoData("")]
-	public void HaveSingleDirectory_InvalidDirectoryName_ShouldThrow(string? invalidDirectoryName,
+	public void HaveDirectory_InvalidDirectoryName_ShouldThrow(string? invalidDirectoryName,
 		string because)
 	{
 		MockFileSystem fileSystem = new();
@@ -174,7 +174,7 @@ public class DirectoryInfoAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveSingleDirectory(invalidDirectoryName!, because);
+			sut.Should().HaveDirectory(invalidDirectoryName!, because);
 		});
 
 		exception.Should().NotBeNull();
@@ -184,13 +184,13 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveSingleDirectory_Null_ShouldThrow(string because)
+	public void HaveDirectory_Null_ShouldThrow(string because)
 	{
 		IDirectoryInfo? sut = null;
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveSingleDirectory(because: because);
+			sut.Should().HaveDirectory(because: because);
 		});
 
 		exception.Should().NotBeNull();
@@ -200,7 +200,7 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveSingleDirectory_WithMatchingDirectory_ShouldNotThrow(
+	public void HaveDirectory_WithMatchingDirectory_ShouldNotThrow(
 		string directoryName,
 		string subdirectoryName)
 	{
@@ -210,12 +210,12 @@ public class DirectoryInfoAssertionsTests
 				.WithSubdirectory(subdirectoryName));
 		IDirectoryInfo sut = fileSystem.DirectoryInfo.New(directoryName);
 
-		sut.Should().HaveSingleDirectory(subdirectoryName);
+		sut.Should().HaveDirectory(subdirectoryName);
 	}
 
 	[Theory]
 	[AutoData]
-	public void HaveSingleDirectory_WithMultipleMatchingDirectory_ShouldThrow(
+	public void HaveDirectory_WithMultipleMatchingDirectory_ShouldThrow(
 		string directoryName,
 		string because)
 	{
@@ -228,7 +228,7 @@ public class DirectoryInfoAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveSingleDirectory("directory*.txt", because);
+			sut.Should().HaveDirectory("directory*.txt", because);
 		});
 
 		exception.Should().NotBeNull();
@@ -239,7 +239,7 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveSingleDirectory_WithoutMatchingDirectory_ShouldThrow(
+	public void HaveDirectory_WithoutMatchingDirectory_ShouldThrow(
 		string directoryName,
 		string subdirectoryName,
 		string because)
@@ -252,7 +252,7 @@ public class DirectoryInfoAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveSingleDirectory(subdirectoryName, because);
+			sut.Should().HaveDirectory(subdirectoryName, because);
 		});
 
 		exception.Should().NotBeNull();
@@ -264,7 +264,7 @@ public class DirectoryInfoAssertionsTests
 	[Theory]
 	[InlineAutoData(null)]
 	[InlineAutoData("")]
-	public void HaveSingleFile_InvalidFileName_ShouldThrow(string? invalidFileName,
+	public void HaveFile_InvalidFileName_ShouldThrow(string? invalidFileName,
 		string because)
 	{
 		MockFileSystem fileSystem = new();
@@ -274,7 +274,7 @@ public class DirectoryInfoAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveSingleFile(invalidFileName!, because);
+			sut.Should().HaveFile(invalidFileName!, because);
 		});
 
 		exception.Should().NotBeNull();
@@ -284,13 +284,13 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveSingleFile_Null_ShouldThrow(string because)
+	public void HaveFile_Null_ShouldThrow(string because)
 	{
 		IDirectoryInfo? sut = null;
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveSingleFile(because: because);
+			sut.Should().HaveFile(because: because);
 		});
 
 		exception.Should().NotBeNull();
@@ -300,7 +300,7 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveSingleFile_WithMatchingFile_ShouldNotThrow(
+	public void HaveFile_WithMatchingFile_ShouldNotThrow(
 		string directoryName,
 		string fileName)
 	{
@@ -310,12 +310,12 @@ public class DirectoryInfoAssertionsTests
 				.WithFile(fileName));
 		IDirectoryInfo sut = fileSystem.DirectoryInfo.New(directoryName);
 
-		sut.Should().HaveSingleFile(fileName);
+		sut.Should().HaveFile(fileName);
 	}
 
 	[Theory]
 	[AutoData]
-	public void HaveSingleFile_WithMultipleMatchingFile_ShouldThrow(
+	public void HaveFile_WithMultipleMatchingFile_ShouldThrow(
 		string directoryName,
 		string because)
 	{
@@ -328,7 +328,7 @@ public class DirectoryInfoAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveSingleFile("file*.txt", because);
+			sut.Should().HaveFile("file*.txt", because);
 		});
 
 		exception.Should().NotBeNull();
@@ -339,7 +339,7 @@ public class DirectoryInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void HaveSingleFile_WithoutMatchingFile_ShouldThrow(
+	public void HaveFile_WithoutMatchingFile_ShouldThrow(
 		string directoryName,
 		string fileName,
 		string because)
@@ -352,7 +352,7 @@ public class DirectoryInfoAssertionsTests
 
 		Exception? exception = Record.Exception(() =>
 		{
-			sut.Should().HaveSingleFile(fileName, because);
+			sut.Should().HaveFile(fileName, because);
 		});
 
 		exception.Should().NotBeNull();

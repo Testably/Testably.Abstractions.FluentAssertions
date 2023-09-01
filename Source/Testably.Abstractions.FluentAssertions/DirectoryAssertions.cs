@@ -20,9 +20,9 @@ public class DirectoryAssertions :
 	///     Asserts that the current directory has at least <paramref name="minimumCount" /> directories which match the
 	///     <paramref name="searchPattern" />.
 	/// </summary>
-	public AndConstraint<DirectoryAssertions> HasDirectoriesMatching(
-		string searchPattern = "*",
-		int minimumCount = 1,
+	public AndConstraint<DirectoryAssertions> HasDirectories(
+		string searchPattern,
+		int minimumCount,
 		string because = "",
 		params object[] becauseArgs)
 	{
@@ -52,24 +52,24 @@ public class DirectoryAssertions :
 	/// <summary>
 	///     Asserts that the current directory has at least one directory which matches the <paramref name="searchPattern" />.
 	/// </summary>
-	public AndConstraint<DirectoryAssertions> HasDirectoryMatching(
+	public AndConstraint<DirectoryAssertions> HasDirectories(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
-		=> HasDirectoriesMatching(searchPattern, 1, because, becauseArgs);
+		=> HasDirectories(searchPattern, 1, because, becauseArgs);
 
 	/// <summary>
 	///     Asserts that the current directory has at least one file which matches the <paramref name="searchPattern" />.
 	/// </summary>
-	public AndConstraint<DirectoryAssertions> HasFileMatching(
+	public AndConstraint<DirectoryAssertions> HasFiles(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
-		=> HasFilesMatching(searchPattern, 1, because, becauseArgs);
+		=> HasFiles(searchPattern, 1, because, becauseArgs);
 
 	/// <summary>
 	///     Asserts that the current directory has at least <paramref name="minimumCount" /> files which match the
 	///     <paramref name="searchPattern" />.
 	/// </summary>
-	public AndConstraint<DirectoryAssertions> HasFilesMatching(
-		string searchPattern = "*",
-		int minimumCount = 1,
+	public AndConstraint<DirectoryAssertions> HasFiles(
+		string searchPattern,
+		int minimumCount,
 		string because = "",
 		params object[] becauseArgs)
 	{
@@ -99,7 +99,7 @@ public class DirectoryAssertions :
 	/// <summary>
 	///     Asserts that the directory contains exactly one directory matching the given <paramref name="searchPattern" />.
 	/// </summary>
-	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> HasSingleDirectoryMatching(
+	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> HasDirectory(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
@@ -130,7 +130,7 @@ public class DirectoryAssertions :
 	/// <summary>
 	///     Asserts that the directory contains exactly one file matching the given <paramref name="searchPattern" />.
 	/// </summary>
-	public AndWhichConstraint<FileSystemAssertions, FileAssertions> HasSingleFileMatching(
+	public AndWhichConstraint<FileSystemAssertions, FileAssertions> HasFile(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
 		Execute.Assertion
