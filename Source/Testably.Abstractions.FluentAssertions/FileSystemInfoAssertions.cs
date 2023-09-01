@@ -26,7 +26,7 @@ public abstract class
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
-			.FailWith("You can't assert that the {context} exists if it is null")
+			.FailWith("You can't assert that the {context} exists if it is null.")
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(fileSystemInfo => fileSystemInfo.Exists)

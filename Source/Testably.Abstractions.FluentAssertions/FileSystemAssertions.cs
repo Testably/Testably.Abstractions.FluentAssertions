@@ -24,7 +24,7 @@ public class FileSystemAssertions :
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
-			.FailWith("You can't assert that a directory exists if you don't pass a proper name.")
+			.FailWith("You can't assert that a directory exists if you don't pass a proper path.")
 			.Then
 			.Given(() => Subject.DirectoryInfo.New(path))
 			.ForCondition(directoryInfo => directoryInfo.Exists)
@@ -46,7 +46,7 @@ public class FileSystemAssertions :
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
-			.FailWith("You can't assert that a file exists if you don't pass a proper name.")
+			.FailWith("You can't assert that a file exists if you don't pass a proper path.")
 			.Then
 			.Given(() => Subject.FileInfo.New(path))
 			.ForCondition(fileInfo => fileInfo.Exists)
@@ -69,7 +69,7 @@ public class FileSystemAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
 			.FailWith(
-				"You can't assert that a directory does not exist if you don't pass a proper name.")
+				"You can't assert that a directory does not exist if you don't pass a proper path.")
 			.Then
 			.Given(() => Subject.DirectoryInfo.New(path))
 			.ForCondition(directoryInfo => !directoryInfo.Exists)
@@ -92,7 +92,7 @@ public class FileSystemAssertions :
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
 			.FailWith(
-				"You can't assert that a file does not exist if you don't pass a proper name.")
+				"You can't assert that a file does not exist if you don't pass a proper path.")
 			.Then
 			.Given(() => Subject.FileInfo.New(path))
 			.ForCondition(fileInfo => !fileInfo.Exists)
