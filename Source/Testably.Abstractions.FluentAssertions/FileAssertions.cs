@@ -41,6 +41,35 @@ public class FileAssertions :
 	}
 
 	/// <summary>
+	///     Asserts that the current file does not have the given <paramref name="fileShare" />, indicating if the it is
+	///     available for reading or writing:
+	///     <br />
+	///     - When set to <see cref="FileShare.Read" />, the file cannot be opened for reading
+	///     <br />
+	///     - When set to <see cref="FileShare.Write" />, the file cannot be opened for writing
+	///     <br />
+	///     - When set to <see cref="FileShare.ReadWrite" />, the file cannot be opened for reading and writing
+	/// </summary>
+	public AndConstraint<FileAssertions> DoesNotHaveFileShare(
+		FileShare fileShare, string because = "", params object[] becauseArgs)
+	{
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.ForCondition(Subject != null)
+			.FailWith(
+				$"You can't assert that the file does not have file share {fileShare} if it is null.")
+			.Then
+			.Given(() => Subject!)
+			.ForCondition(fileInfo => !CheckFileShare(fileInfo, fileShare))
+			.FailWith(
+				$"Expected {{context}} {{0}} not to have file share '{fileShare}'{{reason}}, but it did.",
+				fileInfo => fileInfo.Name);
+
+		return new AndConstraint<FileAssertions>(this);
+	}
+
+	/// <summary>
 	///     Asserts that the current file has the given <paramref name="attribute" />.
 	/// </summary>
 	public AndConstraint<FileAssertions> HasAttribute(
@@ -134,6 +163,35 @@ public class FileAssertions :
 	}
 
 	/// <summary>
+	///     Asserts that the current file has the given <paramref name="fileShare" />, indicating if the it is
+	///     available for reading or writing:
+	///     <br />
+	///     - When set to <see cref="FileShare.Read" />, the file can be opened for reading
+	///     <br />
+	///     - When set to <see cref="FileShare.Write" />, the file can be opened for writing
+	///     <br />
+	///     - When set to <see cref="FileShare.ReadWrite" />, the file can be opened for reading and writing
+	/// </summary>
+	public AndConstraint<FileAssertions> HasFileShare(
+		FileShare fileShare, string because = "", params object[] becauseArgs)
+	{
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.ForCondition(Subject != null)
+			.FailWith(
+				$"You can't assert that the file has file share {fileShare} if it is null.")
+			.Then
+			.Given(() => Subject!)
+			.ForCondition(fileInfo => CheckFileShare(fileInfo, fileShare))
+			.FailWith(
+				$"Expected {{context}} {{0}} to have file share '{fileShare}'{{reason}}, but it did not.",
+				fileInfo => fileInfo.Name);
+
+		return new AndConstraint<FileAssertions>(this);
+	}
+
+	/// <summary>
 	///     Asserts that the current file is not read-only.
 	/// </summary>
 	public AndConstraint<FileAssertions> IsNotReadOnly(
@@ -175,5 +233,44 @@ public class FileAssertions :
 				fileInfo => fileInfo.Name);
 
 		return new AndConstraint<FileAssertions>(this);
+	}
+
+	private static bool CheckFileShare(IFileInfo fileInfo, FileShare fileShare)
+	{
+		if (fileShare.HasFlag(FileShare.Read))
+		{
+			try
+			{
+				fileInfo.FileSystem.File.Open(
+						fileInfo.FullName,
+						FileMode.Open,
+						FileAccess.Read,
+						FileShare.ReadWrite)
+					.Dispose();
+			}
+			catch (IOException)
+			{
+				return false;
+			}
+		}
+
+		if (fileShare.HasFlag(FileShare.Write))
+		{
+			try
+			{
+				fileInfo.FileSystem.File.Open(
+						fileInfo.FullName,
+						FileMode.Open,
+						FileAccess.Write,
+						FileShare.ReadWrite)
+					.Dispose();
+			}
+			catch (IOException)
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 }
