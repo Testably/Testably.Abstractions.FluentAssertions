@@ -69,6 +69,23 @@ public class FileInfoAssertions :
 	}
 
 	/// <summary>
+	///     Asserts that the current file has the given <paramref name="fileShare" />, indicating if the it is
+	///     available for reading or writing:
+	///     <br />
+	///     - When set to <see cref="FileShare.Read" />, the file can be opened for reading
+	///     <br />
+	///     - When set to <see cref="FileShare.Write" />, the file can be opened for writing
+	///     <br />
+	///     - When set to <see cref="FileShare.ReadWrite" />, the file can be opened for reading and writing
+	/// </summary>
+	public AndConstraint<FileInfoAssertions> HaveFileShare(
+		FileShare fileShare, string because = "", params object[] becauseArgs)
+	{
+		new FileAssertions(Subject).HasFileShare(fileShare, because, becauseArgs);
+		return new AndConstraint<FileInfoAssertions>(this);
+	}
+
+	/// <summary>
 	///     Asserts that the current file is not read-only.
 	/// </summary>
 	public AndConstraint<FileInfoAssertions> NotBeReadOnly(
@@ -85,6 +102,23 @@ public class FileInfoAssertions :
 		FileAttributes attribute, string because = "", params object[] becauseArgs)
 	{
 		new FileAssertions(Subject).DoesNotHaveAttribute(attribute, because, becauseArgs);
+		return new AndConstraint<FileInfoAssertions>(this);
+	}
+
+	/// <summary>
+	///     Asserts that the current file does not have the given <paramref name="fileShare" />, indicating if the it is
+	///     available for reading or writing:
+	///     <br />
+	///     - When set to <see cref="FileShare.Read" />, the file cannot be opened for reading
+	///     <br />
+	///     - When set to <see cref="FileShare.Write" />, the file cannot be opened for writing
+	///     <br />
+	///     - When set to <see cref="FileShare.ReadWrite" />, the file cannot be opened for reading and writing
+	/// </summary>
+	public AndConstraint<FileInfoAssertions> NotHaveFileShare(
+		FileShare fileShare, string because = "", params object[] becauseArgs)
+	{
+		new FileAssertions(Subject).DoesNotHaveFileShare(fileShare, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 }
