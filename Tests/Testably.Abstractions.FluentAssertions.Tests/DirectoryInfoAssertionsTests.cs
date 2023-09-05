@@ -182,7 +182,7 @@ public class DirectoryInfoAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected directory \"{directoryName}\" to contain exactly one directory matching \"{subdirectoryName}\" {because}, but found 0.");
+				$"Expected directory \"{directoryName}\" to contain exactly one directory matching \"{subdirectoryName}\" {because}, but found none.");
 	}
 
 	[Theory]
@@ -282,7 +282,7 @@ public class DirectoryInfoAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected directory \"{directoryName}\" to contain exactly one file matching \"{fileName}\" {because}, but found 0.");
+				$"Expected directory \"{directoryName}\" to contain exactly one file matching \"{fileName}\" {because}, but found none.");
 	}
 
 	[Theory]

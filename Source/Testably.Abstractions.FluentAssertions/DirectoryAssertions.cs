@@ -62,6 +62,7 @@ public class DirectoryAssertions :
 	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> HasDirectory(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
+		var subdirectory = Subject?.GetDirectories(searchPattern).FirstOrDefault();
 		Execute.Assertion
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
@@ -75,16 +76,22 @@ public class DirectoryAssertions :
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(directoryInfo
-				=> directoryInfo.GetDirectories(searchPattern).Length == 1)
+				=> directoryInfo.GetDirectories(searchPattern).Length <= 1)
 			.FailWith(
 				"Expected {context} {1} to contain exactly one directory matching {0}{reason}, but found {2}.",
 				_ => searchPattern,
 				directoryInfo => directoryInfo.Name,
-				directoryInfo => directoryInfo.GetDirectories(searchPattern).Length);
+				directoryInfo => directoryInfo.GetDirectories(searchPattern).Length)
+			.Then
+			.ForCondition(_ => subdirectory != null)
+			.FailWith(
+				"Expected {context} {1} to contain exactly one directory matching {0}{reason}, but found none.",
+				_ => searchPattern,
+				directoryInfo => directoryInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, DirectoryAssertions>(
 			new FileSystemAssertions(Subject!.FileSystem),
-			new DirectoryAssertions(Subject!.GetDirectories(searchPattern).Single()));
+			new DirectoryAssertions(subdirectory));
 	}
 
 	/// <summary>
@@ -93,6 +100,7 @@ public class DirectoryAssertions :
 	public AndWhichConstraint<FileSystemAssertions, FileAssertions> HasFile(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
+		var file = Subject?.GetFiles(searchPattern).FirstOrDefault();
 		Execute.Assertion
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
@@ -106,16 +114,22 @@ public class DirectoryAssertions :
 			.Then
 			.Given(() => Subject!)
 			.ForCondition(directoryInfo
-				=> directoryInfo.GetFiles(searchPattern).Length == 1)
+				=> directoryInfo.GetFiles(searchPattern).Length <= 1)
 			.FailWith(
 				"Expected {context} {1} to contain exactly one file matching {0}{reason}, but found {2}.",
 				_ => searchPattern,
 				directoryInfo => directoryInfo.Name,
-				directoryInfo => directoryInfo.GetFiles(searchPattern).Length);
+				directoryInfo => directoryInfo.GetFiles(searchPattern).Length)
+			.Then
+			.ForCondition(_ => file != null)
+			.FailWith(
+				"Expected {context} {1} to contain exactly one file matching {0}{reason}, but found none.",
+				_ => searchPattern,
+				directoryInfo => directoryInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, FileAssertions>(
 			new FileSystemAssertions(Subject!.FileSystem),
-			new FileAssertions(Subject!.GetFiles(searchPattern).Single()));
+			new FileAssertions(file));
 	}
 
 	/// <summary>
