@@ -63,7 +63,7 @@ public class FileAssertions :
 			.Given(() => Subject!)
 			.ForCondition(fileInfo => !CheckFileShare(fileInfo, fileShare))
 			.FailWith(
-				$"Expected {{context}} {{0}} to have file share '{fileShare}'{{reason}}, but it did not.",
+				$"Expected {{context}} {{0}} not to have file share '{fileShare}'{{reason}}, but it did.",
 				fileInfo => fileInfo.Name);
 
 		return new AndConstraint<FileAssertions>(this);

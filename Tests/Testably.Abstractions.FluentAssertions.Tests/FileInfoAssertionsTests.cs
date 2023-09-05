@@ -554,7 +554,7 @@ public class FileInfoAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected file \"{fileName}\" to have file share '{fileShare}' {because}, but it did not.");
+				$"Expected file \"{fileName}\" not to have file share '{fileShare}' {because}, but it did.");
 	}
 
 	[Theory]
@@ -604,6 +604,6 @@ public class FileInfoAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected file \"{fileName}\" to have file share '{fileShare}' {because}, but it did not.");
+				$"Expected file \"{fileName}\" not to have file share '{fileShare}' {because}, but it did.");
 	}
 }
