@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Testably.Abstractions.FluentAssertions;
 
@@ -60,7 +61,7 @@ public abstract class Match
 			RegexOptions options = _ignoreCase
 				? RegexOptions.IgnoreCase
 				: RegexOptions.None;
-			return Regex.IsMatch(value, _pattern, options);
+			return Regex.IsMatch(value, _pattern, options, TimeSpan.FromMilliseconds(1000));
 		}
 
 		/// <inheritdoc cref="object.ToString()" />
