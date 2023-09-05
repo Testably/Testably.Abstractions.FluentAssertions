@@ -2,6 +2,7 @@
 using FluentAssertions;
 using System;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Text;
 using Testably.Abstractions.Testing;
@@ -47,6 +48,84 @@ public class FileAssertionsTests
 		FileAssertions? sut = fileSystem.Should().HaveFile(fileDescription.Name).Which;
 
 		sut.DoesNotHaveAttribute(FileAttributes.ReadOnly);
+	}
+
+	[Theory]
+	[InlineAutoData(FileShare.Read)]
+	[InlineAutoData(FileShare.Write)]
+	[InlineAutoData(FileShare.ReadWrite)]
+	[InlineAutoData(FileShare.Delete)]
+	[InlineAutoData(FileShare.None)]
+	[InlineAutoData(FileShare.Inheritable)]
+	public void DoesNotHaveFileShare_UnlockedFile_ShouldThrow(
+		FileShare fileShare,
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName);
+		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.DoesNotHaveFileShare(fileShare, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileName}\" to have file share '{fileShare}' {because}, but it did not.");
+	}
+
+	[Theory]
+	[InlineAutoData(FileShare.Read)]
+	[InlineAutoData(FileShare.Write)]
+	public void DoesNotHaveFileShare_WhenLockDoesNotShare_ShouldNotThrow(
+		FileShare fileShare,
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName);
+		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+		using FileSystemStream stream = fileSystem.File.Open(
+			fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.DoesNotHaveFileShare(fileShare, because);
+		});
+
+		exception.Should().BeNull();
+	}
+
+	[Theory]
+	[InlineAutoData(FileShare.Read)]
+	[InlineAutoData(FileShare.Write)]
+	[InlineAutoData(FileShare.ReadWrite)]
+	public void DoesNotHaveFileShare_WhenLockSharesFile_ShouldThrow(
+		FileShare fileShare,
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName);
+		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+		using FileSystemStream stream = fileSystem.File.Open(
+			fileName, FileMode.Open, FileAccess.ReadWrite, fileShare);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.DoesNotHaveFileShare(fileShare, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileName}\" to have file share '{fileShare}' {because}, but it did not.");
 	}
 
 	[Theory]
@@ -239,6 +318,75 @@ public class FileAssertionsTests
 		exception!.Message.Should()
 			.Be(
 				$"Expected file \"{fileName}\" to match '{pattern}' {because}, but it did not.");
+	}
+
+	[Theory]
+	[InlineAutoData(FileShare.Read)]
+	[InlineAutoData(FileShare.Write)]
+	[InlineAutoData(FileShare.ReadWrite)]
+	[InlineAutoData(FileShare.Delete)]
+	[InlineAutoData(FileShare.None)]
+	[InlineAutoData(FileShare.Inheritable)]
+	public void HasFileShare_UnlockedFile_ShouldHaveAllFileShares(
+		FileShare fileShare,
+		string fileName)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName);
+		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+
+		sut.HasFileShare(fileShare);
+	}
+
+	[Theory]
+	[InlineAutoData(FileShare.Read)]
+	[InlineAutoData(FileShare.Write)]
+	[InlineAutoData(FileShare.ReadWrite)]
+	public void HasFileShare_WhenLockDoesNotShare_ShouldThrow(
+		FileShare fileShare,
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName);
+		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+		using FileSystemStream stream = fileSystem.File.Open(
+			fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasFileShare(fileShare, because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file \"{fileName}\" to have file share '{fileShare}' {because}, but it did not.");
+	}
+
+	[Theory]
+	[InlineAutoData(FileShare.Read)]
+	[InlineAutoData(FileShare.Write)]
+	public void HasFileShare_WhenLockSharesFile_ShouldNotThrow(
+		FileShare fileShare,
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName);
+		FileAssertions? sut = fileSystem.Should().HaveFile(fileName).Which;
+		using FileSystemStream stream = fileSystem.File.Open(
+			fileName, FileMode.Open, FileAccess.ReadWrite, fileShare);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.HasFileShare(fileShare, because);
+		});
+
+		exception.Should().BeNull();
 	}
 
 	[Theory]
