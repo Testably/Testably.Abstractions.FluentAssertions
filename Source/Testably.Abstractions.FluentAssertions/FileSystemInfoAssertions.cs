@@ -3,6 +3,21 @@
 /// <summary>
 ///     Assertions on <see cref="IFileSystemInfo" />.
 /// </summary>
+public class FileSystemInfoAssertions :
+	FileSystemInfoAssertions<IFileSystemInfo, FileSystemInfoAssertions>
+{
+	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
+	protected override string Identifier => "file system info";
+
+	internal FileSystemInfoAssertions(IFileSystemInfo? instance)
+		: base(instance)
+	{
+	}
+}
+
+/// <summary>
+///     Assertions on <see cref="IFileSystemInfo" />.
+/// </summary>
 public abstract class
 	FileSystemInfoAssertions<TFileSystemInfo, TAssertion>
 	: ReferenceTypeAssertions<TFileSystemInfo?, TAssertion>
