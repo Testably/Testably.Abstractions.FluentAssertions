@@ -27,7 +27,7 @@ public class FileSystemInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void Exist_ForDirectoryInfo_WithCorrectDirectory_ShouldNotThrow(string directoryName)
+	public void Exist_ForDirectoryInfo_WithExistingDirectory_ShouldNotThrow(string directoryName)
 	{
 		MockFileSystem fileSystem = new();
 		fileSystem.Initialize()
@@ -40,7 +40,7 @@ public class FileSystemInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void Exist_ForDirectoryInfo_WithoutCorrectDirectory_ShouldThrow(
+	public void Exist_ForDirectoryInfo_WithoutExistingDirectory_ShouldThrow(
 		string directoryName,
 		string because)
 	{
@@ -97,7 +97,7 @@ public class FileSystemInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void Exist_ForFileInfo_WithCorrectFile_ShouldNotThrow(string fileName)
+	public void Exist_ForFileInfo_WithExistingFile_ShouldNotThrow(string fileName)
 	{
 		MockFileSystem fileSystem = new();
 		fileSystem.Initialize()
@@ -110,7 +110,7 @@ public class FileSystemInfoAssertionsTests
 
 	[Theory]
 	[AutoData]
-	public void Exist_ForFileInfo_WithoutCorrectFile_ShouldThrow(
+	public void Exist_ForFileInfo_WithoutExistingFile_ShouldThrow(
 		string fileName,
 		string because)
 	{
@@ -147,5 +147,132 @@ public class FileSystemInfoAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be($"Expected file \"{fileName}\" to exist {because}, but it did not.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotExist_ForDirectoryInfo_Null_ShouldThrow(string because)
+	{
+		IDirectoryInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().NotExist(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotExist_ForDirectoryInfo_WithExistingDirectory_ShouldThrow(
+		string directoryName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithSubdirectories(directoryName);
+
+		IDirectoryInfo sut = fileSystem.DirectoryInfo.New(directoryName);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().NotExist(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be($"Expected directory \"{directoryName}\" not to exist {because}, but it did.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotExist_ForDirectoryInfo_WithoutExistingDirectory_ShouldNotThrow(
+		string directoryName)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize();
+		IDirectoryInfo sut = fileSystem.DirectoryInfo.New(directoryName);
+
+		sut.Should().NotExist();
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotExist_ForDirectoryInfo_WithSameFile_ShouldNotThrow(
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize();
+		fileSystem.File.WriteAllText(fileName, "some content");
+		IDirectoryInfo sut = fileSystem.DirectoryInfo.New(fileName);
+
+		sut.Should().NotExist(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotExist_ForFileInfo_Null_ShouldThrow(string because)
+	{
+		IFileInfo? sut = null;
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().NotExist(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should().Contain("null");
+		exception.Message.Should().NotContain(because);
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotExist_ForFileInfo_WithExistingFile_ShouldThrow(
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize()
+			.WithFile(fileName);
+		IFileInfo sut = fileSystem.FileInfo.New(fileName);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().NotExist(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be($"Expected file \"{fileName}\" not to exist {because}, but it did.");
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotExist_ForFileInfo_WithoutExistingFile_ShouldNotThrow(string fileName)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize();
+
+		IFileInfo sut = fileSystem.FileInfo.New(fileName);
+
+		sut.Should().NotExist();
+	}
+
+	[Theory]
+	[AutoData]
+	public void NotExist_ForFileInfo_WithSameDirectory_ShouldNotThrow(
+		string fileName,
+		string because)
+	{
+		MockFileSystem fileSystem = new();
+		fileSystem.Initialize();
+		fileSystem.Directory.CreateDirectory(fileName);
+		IFileInfo sut = fileSystem.FileInfo.New(fileName);
+
+		sut.Should().NotExist(because);
 	}
 }

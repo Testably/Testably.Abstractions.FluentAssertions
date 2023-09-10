@@ -36,4 +36,25 @@ public abstract class
 
 		return new AndConstraint<TFileSystemInfo>(Subject!);
 	}
+
+	/// <summary>
+	///     Asserts that the current file or directory does not exist.
+	/// </summary>
+	public AndConstraint<TFileSystemInfo> NotExist(
+		string because = "", params object[] becauseArgs)
+	{
+		Execute.Assertion
+			.WithDefaultIdentifier(Identifier)
+			.BecauseOf(because, becauseArgs)
+			.ForCondition(Subject != null)
+			.FailWith("You can't assert that the {context} does not exist if it is null.")
+			.Then
+			.Given(() => Subject!)
+			.ForCondition(fileSystemInfo => !fileSystemInfo.Exists)
+			.FailWith(
+				"Expected {context} {0} not to exist{reason}, but it did.",
+				fileSystemInfo => fileSystemInfo.Name);
+
+		return new AndConstraint<TFileSystemInfo>(Subject!);
+	}
 }
