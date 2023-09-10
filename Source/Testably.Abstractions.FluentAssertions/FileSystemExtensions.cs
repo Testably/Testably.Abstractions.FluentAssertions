@@ -20,6 +20,13 @@ public static class FileSystemExtensions
 		=> new(instance);
 
 	/// <summary>
+	///     Returns a <see cref="FileAssertions" /> object that can be used to
+	///     assert the current <see cref="IFileInfo" />.
+	/// </summary>
+	public static FileSystemInfoAssertions Should(this IFileSystemInfo? instance)
+		=> new(instance);
+
+	/// <summary>
 	///     Returns a <see cref="FileSystemAssertions" /> object that can be used to
 	///     assert the current <see cref="IFileSystem" />.
 	/// </summary>

@@ -149,6 +149,43 @@ public class FileSystemInfoAssertionsTests
 			.Be($"Expected file \"{fileName}\" to exist {because}, but it did not.");
 	}
 
+	[SkippableTheory]
+	[AutoData]
+	public void Exist_ForFileSystemInfo_WithExistingFile_ShouldNotThrow(
+		string path, string pathToTarget, string because)
+	{
+		MockFileSystem fileSystem = new();
+		string targetFullPath = fileSystem.Path.GetFullPath(pathToTarget);
+		fileSystem.Directory.CreateDirectory(pathToTarget);
+		fileSystem.Directory.CreateSymbolicLink(path, targetFullPath);
+		IFileSystemInfo? sut =
+			fileSystem.Directory.ResolveLinkTarget(path, false);
+
+		sut.Should().Exist(because);
+	}
+
+	[SkippableTheory]
+	[AutoData]
+	public void Exist_ForFileSystemInfo_WithoutExistingFile_ShouldThrow(
+		string path, string pathToTarget, string because)
+	{
+		MockFileSystem fileSystem = new();
+		string targetFullPath = fileSystem.Path.GetFullPath(pathToTarget);
+		fileSystem.Directory.CreateSymbolicLink(path, targetFullPath);
+		IFileSystemInfo? sut =
+			fileSystem.Directory.ResolveLinkTarget(path, false);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().Exist(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file system info \"{pathToTarget}\" to exist {because}, but it did not.");
+	}
+
 	[Theory]
 	[AutoData]
 	public void NotExist_ForDirectoryInfo_Null_ShouldThrow(string because)
@@ -272,6 +309,43 @@ public class FileSystemInfoAssertionsTests
 		fileSystem.Initialize();
 		fileSystem.Directory.CreateDirectory(fileName);
 		IFileInfo sut = fileSystem.FileInfo.New(fileName);
+
+		sut.Should().NotExist(because);
+	}
+
+	[SkippableTheory]
+	[AutoData]
+	public void NotExist_ForFileSystemInfo_WithExistingFile_ShouldThrow(
+		string path, string pathToTarget, string because)
+	{
+		MockFileSystem fileSystem = new();
+		string targetFullPath = fileSystem.Path.GetFullPath(pathToTarget);
+		fileSystem.Directory.CreateDirectory(pathToTarget);
+		fileSystem.Directory.CreateSymbolicLink(path, targetFullPath);
+		IFileSystemInfo? sut =
+			fileSystem.Directory.ResolveLinkTarget(path, false);
+
+		Exception? exception = Record.Exception(() =>
+		{
+			sut.Should().NotExist(because);
+		});
+
+		exception.Should().NotBeNull();
+		exception!.Message.Should()
+			.Be(
+				$"Expected file system info \"{pathToTarget}\" not to exist {because}, but it did.");
+	}
+
+	[SkippableTheory]
+	[AutoData]
+	public void NotExist_ForFileSystemInfo_WithoutExistingFile_ShouldNotThrow(
+		string path, string pathToTarget, string because)
+	{
+		MockFileSystem fileSystem = new();
+		string targetFullPath = fileSystem.Path.GetFullPath(pathToTarget);
+		fileSystem.Directory.CreateSymbolicLink(path, targetFullPath);
+		IFileSystemInfo? sut =
+			fileSystem.Directory.ResolveLinkTarget(path, false);
 
 		sut.Should().NotExist(because);
 	}
