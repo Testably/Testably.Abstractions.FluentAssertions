@@ -149,6 +149,7 @@ public class FileSystemInfoAssertionsTests
 			.Be($"Expected file \"{fileName}\" to exist {because}, but it did not.");
 	}
 
+#if NET
 	[SkippableTheory]
 	[AutoData]
 	public void Exist_ForFileSystemInfo_WithExistingFile_ShouldNotThrow(
@@ -185,6 +186,7 @@ public class FileSystemInfoAssertionsTests
 			.Be(
 				$"Expected file system info \"{pathToTarget}\" to exist {because}, but it did not.");
 	}
+#endif
 
 	[Theory]
 	[AutoData]
@@ -313,6 +315,7 @@ public class FileSystemInfoAssertionsTests
 		sut.Should().NotExist(because);
 	}
 
+#if NET
 	[SkippableTheory]
 	[AutoData]
 	public void NotExist_ForFileSystemInfo_WithExistingFile_ShouldThrow(
@@ -349,4 +352,5 @@ public class FileSystemInfoAssertionsTests
 
 		sut.Should().NotExist(because);
 	}
+#endif
 }
