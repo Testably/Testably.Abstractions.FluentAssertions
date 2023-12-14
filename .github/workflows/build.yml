@@ -79,7 +79,7 @@ jobs:
       - name: Run tests
         run: dotnet test --no-build --collect:"XPlat Code Coverage"
       - name: Upload coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Code coverage (MacOS)
           path: "**/coverage.cobertura.xml"
@@ -103,7 +103,7 @@ jobs:
       - name: Run tests
         run: dotnet test --no-build --collect:"XPlat Code Coverage"
       - name: Upload coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Code coverage (Ubuntu)
           path: "**/coverage.cobertura.xml"
@@ -127,7 +127,7 @@ jobs:
       - name: Run tests
         run: dotnet test --no-build --collect:"XPlat Code Coverage"
       - name: Upload coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Code coverage (Windows)
           path: "**/coverage.cobertura.xml"
