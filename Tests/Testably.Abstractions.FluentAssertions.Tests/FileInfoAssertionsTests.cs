@@ -6,7 +6,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Text;
 using Testably.Abstractions.Testing;
-using Testably.Abstractions.Testing.FileSystemInitializer;
+using Testably.Abstractions.Testing.Initializer;
 using Xunit;
 
 namespace Testably.Abstractions.FluentAssertions.Tests;
