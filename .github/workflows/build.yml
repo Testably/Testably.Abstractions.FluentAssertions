@@ -221,8 +221,7 @@ jobs:
           coverage-reports: coverage-report/Cobertura.xml
 
   stryker:
-    name: Analyze quality of unit test coverage with .NET Stryker
-    if: startsWith(github.ref, 'refs/heads/release/')
+    name: Stryker mutation testing
     runs-on: ubuntu-latest
     timeout-minutes: 300
     steps:
