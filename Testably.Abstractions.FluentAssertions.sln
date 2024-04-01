@@ -38,8 +38,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{8FD8E33B-2072-48CA-8164-DE2AA5DCB8FD}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build.yml = .github\workflows\build.yml
-		.github\workflows\ci-stryker.yml = .github\workflows\ci-stryker.yml
 		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\workflows\test-report.yml = .github\workflows\test-report.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testably.Abstractions.FluentAssertions", "Source\Testably.Abstractions.FluentAssertions\Testably.Abstractions.FluentAssertions.csproj", "{BC318ADF-0A23-4D0F-8FBE-4E73F839450A}"
