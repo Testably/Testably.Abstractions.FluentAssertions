@@ -8,12 +8,7 @@
 			"./Testably.Abstractions.FluentAssertions.Tests/Testably.Abstractions.FluentAssertions.Tests.csproj"
 		],
 		"project": "Testably.Abstractions.FluentAssertions.csproj",
-		"target-framework": "net7.0",
-		"since": {
-			"ignore-changes-in": [
-				"**/.github/**/*.*"
-			]
-		},
+		"target-framework": "net8.0",
 		"reporters": [
 			"html",
 			"progress",
