@@ -5,27 +5,30 @@ using Testably.Abstractions.Testing.Statistics;
 
 namespace Testably.Abstractions.FluentAssertions;
 
+/// <summary>
+///     Assertions on method statistics.
+/// </summary>
 public class StatisticMethodAssertions<TType, TAssertions>
 	: StatisticAssertionsCount<TType, TAssertions>
 	where TAssertions : StatisticAssertions<TType>
 {
-	/// <inheritdoc />
+	/// <inheritdoc cref="StatisticAssertionsCount{TType, TAssertions}.IsSubjectNull" />
 	protected override bool IsSubjectNull { get; }
 
-	/// <inheritdoc />
+	/// <inheritdoc cref="StatisticAssertionsCount{TType, TAssertions}.StatisticName" />
 	protected override string StatisticName { get; }
 
-	/// <inheritdoc />
+	/// <inheritdoc cref="StatisticAssertionsCount{TType, TAssertions}.StatisticType" />
 	protected override string StatisticType => "method";
 
-	/// <inheritdoc />
+	/// <inheritdoc cref="StatisticAssertionsCount{TType, TAssertions}.StatisticTypeVerb" />
 	protected override string StatisticTypeVerb => "called";
 
 	private readonly TAssertions _assertions;
 
 	private readonly IEnumerable<MethodStatistic> _methods;
 
-	public StatisticMethodAssertions(TAssertions assertions, string methodName)
+	internal StatisticMethodAssertions(TAssertions assertions, string methodName)
 		: base(assertions)
 	{
 		_assertions = assertions;
@@ -34,7 +37,7 @@ public class StatisticMethodAssertions<TType, TAssertions>
 		_methods = Array.Empty<MethodStatistic>();
 	}
 
-	public StatisticMethodAssertions(TAssertions assertions, string methodName,
+	internal StatisticMethodAssertions(TAssertions assertions, string methodName,
 		IEnumerable<MethodStatistic> methods)
 		: base(assertions)
 	{
@@ -107,7 +110,7 @@ public class StatisticMethodAssertions<TType, TAssertions>
 		Func<TParameter, bool> predicate)
 		=> WithParameterAt(2, predicate);
 
-	/// <inheritdoc />
+	/// <inheritdoc cref="StatisticAssertionsCount{TType, TAssertions}.GetCount()" />
 	protected override int GetCount()
 		=> _methods.Count();
 }

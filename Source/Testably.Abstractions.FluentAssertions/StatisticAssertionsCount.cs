@@ -1,14 +1,29 @@
 ﻿namespace Testably.Abstractions.FluentAssertions;
 
+/// <summary>
+///     Assertions on statistics.
+/// </summary>
 public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions assertions)
 	where TAssertions : StatisticAssertions<TType>
 {
+	/// <summary>
+	///     Flag indicating if the subject of the assertion is null.
+	/// </summary>
 	protected abstract bool IsSubjectNull { get; }
 
+	/// <summary>
+	///     The name of the statistic.
+	/// </summary>
 	protected abstract string StatisticName { get; }
 
+	/// <summary>
+	///     The type of the statistic.
+	/// </summary>
 	protected abstract string StatisticType { get; }
 
+	/// <summary>
+	///     The verb to interact with the statistic type.
+	/// </summary>
 	protected abstract string StatisticTypeVerb { get; }
 
 	/// <summary>
@@ -211,6 +226,9 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		return new AndConstraint<TAssertions>(assertions);
 	}
 
+	/// <summary>
+	///     Get the count of matching statistic values.
+	/// </summary>
 	protected abstract int GetCount();
 
 	private static string CountToString(int count)

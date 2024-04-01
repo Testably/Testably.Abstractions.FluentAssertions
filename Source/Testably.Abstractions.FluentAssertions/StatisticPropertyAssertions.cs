@@ -5,25 +5,28 @@ using Testably.Abstractions.Testing.Statistics;
 
 namespace Testably.Abstractions.FluentAssertions;
 
+/// <summary>
+///     Assertions on property statistics.
+/// </summary>
 public class StatisticPropertyAssertions<TType, TAssertions>
 	: StatisticAssertionsCount<TType, TAssertions>
 	where TAssertions : StatisticAssertions<TType>
 {
-	/// <inheritdoc />
+	/// <inheritdoc cref="StatisticAssertionsCount{TType, TAssertions}.IsSubjectNull" />
 	protected override bool IsSubjectNull { get; }
 
-	/// <inheritdoc />
+	/// <inheritdoc cref="StatisticAssertionsCount{TType, TAssertions}.StatisticName" />
 	protected override string StatisticName { get; }
 
-	/// <inheritdoc />
+	/// <inheritdoc cref="StatisticAssertionsCount{TType, TAssertions}.StatisticType" />
 	protected override string StatisticType => "property";
 
-	/// <inheritdoc />
+	/// <inheritdoc cref="StatisticAssertionsCount{TType, TAssertions}.StatisticTypeVerb" />
 	protected override string StatisticTypeVerb => "accessed";
 
 	private readonly IEnumerable<PropertyStatistic> _properties;
 
-	public StatisticPropertyAssertions(TAssertions assertions, string propertyName)
+	internal StatisticPropertyAssertions(TAssertions assertions, string propertyName)
 		: base(assertions)
 	{
 		IsSubjectNull = true;
@@ -31,7 +34,7 @@ public class StatisticPropertyAssertions<TType, TAssertions>
 		_properties = Array.Empty<PropertyStatistic>();
 	}
 
-	public StatisticPropertyAssertions(TAssertions assertions, string propertyName,
+	internal StatisticPropertyAssertions(TAssertions assertions, string propertyName,
 		IEnumerable<PropertyStatistic> properties)
 		: base(assertions)
 	{
@@ -40,7 +43,7 @@ public class StatisticPropertyAssertions<TType, TAssertions>
 		_properties = properties;
 	}
 
-	/// <inheritdoc />
+	/// <inheritdoc cref="StatisticAssertionsCount{TType, TAssertions}.GetCount()" />
 	protected override int GetCount()
 		=> _properties.Count();
 }
