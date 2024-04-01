@@ -180,7 +180,7 @@ jobs:
       - name: Install .NET Stryker
         shell: bash
         run: |
-          dotnet tool install dotnet-stryker --tool-path ../tools --version 3.7.1
+          dotnet tool install dotnet-stryker --tool-path ../tools
       - name: Analyze Testably.Abstractions.FluentAssertions
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
