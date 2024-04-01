@@ -27,7 +27,7 @@ public class StatisticPropertyAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected property `DirectorySeparatorChar` to never be accessed {because}, but it did once.");
+				$"Expected property `DirectorySeparatorChar` to never be accessed {because}, but it was once.");
 	}
 
 	[Fact]

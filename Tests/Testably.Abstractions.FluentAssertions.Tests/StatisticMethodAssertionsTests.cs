@@ -27,7 +27,7 @@ public class StatisticMethodAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected method `WriteAllText` to never be called {because}, but it did once.");
+				$"Expected method `WriteAllText` to never be called {because}, but it was once.");
 	}
 
 	[Fact]
@@ -58,7 +58,7 @@ public class StatisticMethodAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected method `WriteAllText` to never be called {because}, but it did once.");
+				$"Expected method `WriteAllText` to never be called {because}, but it was once.");
 	}
 
 	[Fact]
@@ -92,7 +92,7 @@ public class StatisticMethodAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected method `WriteAllText` to never be called {because}, but it did once.");
+				$"Expected method `WriteAllText` to never be called {because}, but it was once.");
 	}
 
 	[Fact]
@@ -126,7 +126,7 @@ public class StatisticMethodAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected method `WriteAllText` to never be called {because}, but it did once.");
+				$"Expected method `WriteAllText` to never be called {because}, but it was once.");
 	}
 
 	[Fact]
@@ -160,7 +160,7 @@ public class StatisticMethodAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected method `WriteAllText` to never be called {because}, but it did once.");
+				$"Expected method `WriteAllText` to never be called {because}, but it was once.");
 	}
 
 	[Fact]
@@ -194,7 +194,7 @@ public class StatisticMethodAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected method `WriteAllText` to never be called {because}, but it did once.");
+				$"Expected method `WriteAllText` to never be called {because}, but it was once.");
 	}
 
 	[Fact]
@@ -228,7 +228,7 @@ public class StatisticMethodAssertionsTests
 		exception.Should().NotBeNull();
 		exception!.Message.Should()
 			.Be(
-				$"Expected method `WriteAllText` to never be called {because}, but it did once.");
+				$"Expected method `WriteAllText` to never be called {because}, but it was once.");
 	}
 
 	[Fact]
