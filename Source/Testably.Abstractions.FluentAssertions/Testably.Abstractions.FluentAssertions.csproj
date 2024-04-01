@@ -14,7 +14,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="FluentAssertions" />
-		<PackageReference Include="Testably.Abstractions.Interface" />
+		<PackageReference Include="Testably.Abstractions.Testing" />
 	</ItemGroup>
 
 </Project>
