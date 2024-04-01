@@ -69,7 +69,7 @@ public class StatisticMethodAssertions<TType, TAssertions>
 	public StatisticMethodAssertions<TType, TAssertions> WithParameterAt<TParameter>(int index,
 		TParameter parameterValue)
 		=> WithParameterAt<TParameter>(index,
-			p => p == null ? parameterValue == null : p.Equals(parameterValue));
+			p => p is null ? parameterValue is null : p.Equals(parameterValue));
 
 	/// <summary>
 	///     Filters for methods whose parameter at the zero-based <paramref name="index" />
@@ -86,7 +86,7 @@ public class StatisticMethodAssertions<TType, TAssertions>
 	public StatisticMethodAssertions<TType, TAssertions> WithSecondParameter<TParameter>(
 		TParameter parameterValue)
 		=> WithParameterAt<TParameter>(1,
-			p => p == null ? parameterValue == null : p.Equals(parameterValue));
+			p => p is null ? parameterValue is null : p.Equals(parameterValue));
 
 	/// <summary>
 	///     Filters for methods whose second parameter matches the <paramref name="predicate" />.
@@ -101,7 +101,7 @@ public class StatisticMethodAssertions<TType, TAssertions>
 	public StatisticMethodAssertions<TType, TAssertions> WithThirdParameter<TParameter>(
 		TParameter parameterValue)
 		=> WithParameterAt<TParameter>(2,
-			p => p == null ? parameterValue == null : p.Equals(parameterValue));
+			p => p is null ? parameterValue is null : p.Equals(parameterValue));
 
 	/// <summary>
 	///     Filters for methods whose third parameter matches the <paramref name="predicate" />.
