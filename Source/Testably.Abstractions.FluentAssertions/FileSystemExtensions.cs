@@ -1,4 +1,6 @@
-﻿namespace Testably.Abstractions.FluentAssertions;
+﻿using Testably.Abstractions.Testing.Statistics;
+
+namespace Testably.Abstractions.FluentAssertions;
 
 /// <summary>
 ///     Assertion extensions on <see cref="IFileSystem" />.
@@ -31,5 +33,12 @@ public static class FileSystemExtensions
 	///     assert the current <see cref="IFileSystem" />.
 	/// </summary>
 	public static FileSystemAssertions Should(this IFileSystem instance)
+		=> new(instance);
+
+	/// <summary>
+	///     Returns a <see cref="StatisticAssertions{TType}" /> object that can be used to
+	///     assert the current <see cref="IStatistics{TType}" />.
+	/// </summary>
+	public static StatisticAssertions<TType> Should<TType>(this IStatistics<TType>? instance)
 		=> new(instance);
 }
