@@ -53,7 +53,7 @@ public class StatisticMethodAssertions<TType, TAssertions>
 	public StatisticMethodAssertions<TType, TAssertions> WithFirstParameter<TParameter>(
 		TParameter parameterValue)
 		=> WithParameterAt<TParameter>(0,
-			p => p == null ? parameterValue == null : p.Equals(parameterValue));
+			p => p is null ? parameterValue is null : p.Equals(parameterValue));
 
 	/// <summary>
 	///     Filters for methods whose first parameter matches the <paramref name="predicate" />.
