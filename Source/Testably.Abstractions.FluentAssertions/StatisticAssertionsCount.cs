@@ -12,7 +12,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 	protected abstract string StatisticTypeVerb { get; }
 
 	/// <summary>
-	///     Asserts that the statistic was never executed.
+	///     Asserts that the number of calls on the filtered methods/properties is 0 (zero).
 	/// </summary>
 	public AndConstraint<TAssertions> Never(
 		string because = "", params object[] becauseArgs)
