@@ -92,6 +92,21 @@ public class StatisticMethodAssertions<TType, TAssertions>
 		Func<TParameter, bool> predicate)
 		=> WithParameterAt(1, predicate);
 
+	/// <summary>
+	///     Filters for methods whose third parameter equals <paramref name="parameterValue" />.
+	/// </summary>
+	public StatisticMethodAssertions<TType, TAssertions> WithThirdParameter<TParameter>(
+		TParameter parameterValue)
+		=> WithParameterAt<TParameter>(2,
+			p => p == null ? parameterValue == null : p.Equals(parameterValue));
+
+	/// <summary>
+	///     Filters for methods whose third parameter matches the <paramref name="predicate" />.
+	/// </summary>
+	public StatisticMethodAssertions<TType, TAssertions> WithThirdParameter<TParameter>(
+		Func<TParameter, bool> predicate)
+		=> WithParameterAt(2, predicate);
+
 	/// <inheritdoc />
 	protected override int GetCount()
 		=> _methods.Count();
