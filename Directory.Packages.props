@@ -5,7 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageVersion Include="FluentAssertions" Version="7.1.0" />
+		<PackageVersion Include="FluentAssertions" Version="7.2.0" />
 		<PackageVersion Include="Testably.Abstractions.Interface" Version="9.0.0" />
 		<PackageVersion Include="Testably.Abstractions.Testing" Version="4.0.0" />
 	</ItemGroup>
