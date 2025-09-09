@@ -1,13 +1,13 @@
 {
 	"stryker-config": {
 		"project-info": {
-			"name": "github.com/Testably/Testably.Abstractions.FluentAssertions",
-			"module": "Testably.Abstractions.FluentAssertions"
+			"name": "github.com/Testably/Testably.Abstractions.AwesomeAssertions",
+			"module": "Testably.Abstractions.AwesomeAssertions"
 		},
 		"test-projects": [
-			"./Testably.Abstractions.FluentAssertions.Tests/Testably.Abstractions.FluentAssertions.Tests.csproj"
+			"./Testably.Abstractions.AwesomeAssertions.Tests/Testably.Abstractions.AwesomeAssertions.Tests.csproj"
 		],
-		"project": "Testably.Abstractions.FluentAssertions.csproj",
+		"project": "Testably.Abstractions.AwesomeAssertions.csproj",
 		"target-framework": "net8.0",
 		"reporters": [
 			"html",

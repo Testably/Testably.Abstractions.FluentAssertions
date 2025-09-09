@@ -1,10 +1,10 @@
 ﻿using AutoFixture.Xunit2;
-using FluentAssertions;
+using AwesomeAssertions;
 using System;
 using Testably.Abstractions.Testing;
 using Xunit;
 
-namespace Testably.Abstractions.FluentAssertions.Tests;
+namespace Testably.Abstractions.AwesomeAssertions.Tests;
 
 public class DirectoryAssertionsTests
 {

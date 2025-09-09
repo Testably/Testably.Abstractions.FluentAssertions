@@ -1,6 +1,6 @@
 ﻿using Testably.Abstractions.Testing.Statistics;
 
-namespace Testably.Abstractions.FluentAssertions;
+namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Assertion extensions on <see cref="IFileSystem" />.

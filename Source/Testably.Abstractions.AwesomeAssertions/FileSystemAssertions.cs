@@ -1,4 +1,4 @@
-﻿namespace Testably.Abstractions.FluentAssertions;
+﻿namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Assertions on <see cref="IFileSystem" />.
@@ -20,7 +20,7 @@ public class FileSystemAssertions :
 	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> HaveDirectory(
 		string path, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+	 	Execute.Assertion
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))

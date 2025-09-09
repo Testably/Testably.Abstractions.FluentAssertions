@@ -5,11 +5,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Source\Testably.Abstractions.FluentAssertions\Testably.Abstractions.FluentAssertions.csproj" />
+		<ProjectReference Include="..\..\Source\Testably.Abstractions.AwesomeAssertions\Testably.Abstractions.AwesomeAssertions.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AwesomeAssertions" />
 		<PackageReference Include="Testably.Abstractions.Testing" />
+		<PackageReference Remove="AwesomeAssertions" />
 	</ItemGroup>
 
 </Project>

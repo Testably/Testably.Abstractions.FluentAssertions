@@ -1,7 +1,7 @@
-﻿using FluentAssertions;
+﻿using AwesomeAssertions;
 using Xunit;
 
-namespace Testably.Abstractions.FluentAssertions.Tests;
+namespace Testably.Abstractions.AwesomeAssertions.Tests;
 
 public sealed class MatchTests
 {

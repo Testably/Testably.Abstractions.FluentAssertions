@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Testably.Abstractions.Testing.Statistics;
 
-namespace Testably.Abstractions.FluentAssertions;
+namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Assertions on method statistics.

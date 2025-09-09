@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text;
 
-namespace Testably.Abstractions.FluentAssertions;
+namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Assertions on <see cref="IFileInfo" />.
