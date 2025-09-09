@@ -26,11 +26,12 @@ public class StatisticAssertions<TType> :
 	{
 		if (Subject == null)
 		{
-			return new StatisticPropertyAssertions<TType, StatisticAssertions<TType>>(this, propertyName);
+			return new StatisticPropertyAssertions<TType, StatisticAssertions<TType>>(this,
+				propertyName, CurrentAssertionChain);
 		}
 
 		return new StatisticPropertyAssertions<TType, StatisticAssertions<TType>>(this, propertyName,
-			Subject.Properties.Where(p => p.Name == propertyName));
+			Subject.Properties.Where(p => p.Name == propertyName), CurrentAssertionChain);
 	}
 
 	/// <summary>
@@ -42,10 +43,10 @@ public class StatisticAssertions<TType> :
 	{
 		if (Subject == null)
 		{
-			return new StatisticMethodAssertions<TType, StatisticAssertions<TType>>(this, methodName);
+			return new StatisticMethodAssertions<TType, StatisticAssertions<TType>>(this, methodName, CurrentAssertionChain);
 		}
 
 		return new StatisticMethodAssertions<TType, StatisticAssertions<TType>>(this, methodName,
-			Subject.Methods.Where(m => m.Name == methodName));
+			Subject.Methods.Where(m => m.Name == methodName), CurrentAssertionChain);
 	}
 }
