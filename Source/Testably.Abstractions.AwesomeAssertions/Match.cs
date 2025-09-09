@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Testably.Abstractions.FluentAssertions;
+namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Match a <see langword="string" /> against a pattern.

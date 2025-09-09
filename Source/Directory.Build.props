@@ -7,10 +7,10 @@
 		<Authors>Testably</Authors>
 		<Copyright>Copyright (c) 2023 Testably</Copyright>
 		<PackageTags>abstractions testing fluent-assertions</PackageTags>
-		<PackageProjectUrl>https://github.com/Testably/Testably.Abstractions.FluentAssertions</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/Testably/Testably.Abstractions.AwesomeAssertions</PackageProjectUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>Docs/logo_256x256.png</PackageIcon>
-		<RepositoryUrl>https://github.com/Testably/Testably.Abstractions.FluentAssertions.git</RepositoryUrl>
+		<RepositoryUrl>https://github.com/Testably/Testably.Abstractions.AwesomeAssertions.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<MinVerTagPrefix>v</MinVerTagPrefix>
 	</PropertyGroup>

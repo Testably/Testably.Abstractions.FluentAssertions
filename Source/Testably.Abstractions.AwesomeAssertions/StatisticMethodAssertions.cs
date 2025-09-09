@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Testably.Abstractions.Testing.Statistics;
 
-namespace Testably.Abstractions.FluentAssertions;
+namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Assertions on method statistics.
@@ -28,18 +28,18 @@ public class StatisticMethodAssertions<TType, TAssertions>
 
 	private readonly IEnumerable<MethodStatistic> _methods;
 
-	internal StatisticMethodAssertions(TAssertions assertions, string methodName)
-		: base(assertions)
+	internal StatisticMethodAssertions(TAssertions assertions, string methodName, AssertionChain currentAssertionChain)
+		: base(assertions, currentAssertionChain)
 	{
 		_assertions = assertions;
 		IsSubjectNull = true;
 		StatisticName = methodName;
-		_methods = Array.Empty<MethodStatistic>();
+		_methods = [];
 	}
 
 	internal StatisticMethodAssertions(TAssertions assertions, string methodName,
-		IEnumerable<MethodStatistic> methods)
-		: base(assertions)
+		IEnumerable<MethodStatistic> methods, AssertionChain currentAssertionChain)
+		: base(assertions, currentAssertionChain)
 	{
 		IsSubjectNull = false;
 		StatisticName = methodName;
@@ -78,7 +78,7 @@ public class StatisticMethodAssertions<TType, TAssertions>
 	public StatisticMethodAssertions<TType, TAssertions> WithParameterAt<TParameter>(int index,
 		Func<TParameter, bool> predicate)
 		=> new(_assertions, StatisticName,
-			_methods.Where(p => p.Parameters[index].Is(predicate)));
+			_methods.Where(p => p.Parameters[index].Is(predicate)), CurrentAssertionChain);
 
 	/// <summary>
 	///     Filters for methods whose second parameter equals <paramref name="parameterValue" />.

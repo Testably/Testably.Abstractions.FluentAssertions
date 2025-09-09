@@ -7,7 +7,7 @@ All code should be covered by unit tests and comply with the coding guideline in
 
 ### Technical expectations
 As a framework for supporting unit testing, this project has a high standard for testing itself.  
-In order to support this, static code analysis is performed using [SonarCloud](https://sonarcloud.io/project/overview?id=Testably_Testably.Abstractions.FluentAssertions) with quality gate requiring to  
+In order to support this, static code analysis is performed using [SonarCloud](https://sonarcloud.io/project/overview?id=Testably_Testably.Abstractions.AwesomeAssertions) with quality gate requiring to  
 - solve all issues reported by SonarCloud
 - have a code coverage of > 90%
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Testably.Abstractions.Testing.Statistics;
 
-namespace Testably.Abstractions.FluentAssertions;
+namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Assertions on property statistics.
@@ -26,17 +26,18 @@ public class StatisticPropertyAssertions<TType, TAssertions>
 
 	private readonly IEnumerable<PropertyStatistic> _properties;
 
-	internal StatisticPropertyAssertions(TAssertions assertions, string propertyName)
-		: base(assertions)
+	internal StatisticPropertyAssertions(TAssertions assertions, string propertyName,
+		AssertionChain currentAssertionChain)
+		: base(assertions, currentAssertionChain)
 	{
 		IsSubjectNull = true;
 		StatisticName = propertyName;
-		_properties = Array.Empty<PropertyStatistic>();
+		_properties = [];
 	}
 
 	internal StatisticPropertyAssertions(TAssertions assertions, string propertyName,
-		IEnumerable<PropertyStatistic> properties)
-		: base(assertions)
+		IEnumerable<PropertyStatistic> properties, AssertionChain currentAssertionChain)
+		: base(assertions, currentAssertionChain)
 	{
 		IsSubjectNull = false;
 		StatisticName = propertyName;

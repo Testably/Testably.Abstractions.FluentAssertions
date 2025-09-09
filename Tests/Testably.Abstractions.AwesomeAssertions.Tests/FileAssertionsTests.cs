@@ -1,5 +1,5 @@
 ﻿using AutoFixture.Xunit2;
-using FluentAssertions;
+using AwesomeAssertions;
 using System;
 using System.IO;
 using System.IO.Abstractions;
@@ -9,7 +9,7 @@ using Testably.Abstractions.Testing;
 using Testably.Abstractions.Testing.Initializer;
 using Xunit;
 
-namespace Testably.Abstractions.FluentAssertions.Tests;
+namespace Testably.Abstractions.AwesomeAssertions.Tests;
 
 public class FileAssertionsTests
 {

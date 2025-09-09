@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<RootNamespace>Testably.Abstractions.FluentAssertions</RootNamespace>
-		<Description>FluentAssertions extension methods for `Testably.Abstractions`.</Description>
+		<TargetFramework>net9.0</TargetFramework>
+		<RootNamespace>Testably.Abstractions.AwesomeAssertions</RootNamespace>
+		<Description>AwesomeAssertions extension methods for `Testably.Abstractions`.</Description>
 		<PackageReadmeFile>Docs/README.md</PackageReadmeFile>
 		<IsTestProject>false</IsTestProject>
 		<SonarQubeTestProject>false</SonarQubeTestProject>
@@ -13,7 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FluentAssertions" />
+		<PackageReference Include="AwesomeAssertions" />
 		<PackageReference Include="Testably.Abstractions.Testing" />
 	</ItemGroup>
 

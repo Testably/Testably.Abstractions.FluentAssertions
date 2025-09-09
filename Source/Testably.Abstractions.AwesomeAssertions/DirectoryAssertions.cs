@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Testably.Abstractions.FluentAssertions;
+namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Assertions on <see cref="IDirectoryInfo" />.
@@ -11,8 +11,8 @@ public class DirectoryAssertions :
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "directory";
 
-	internal DirectoryAssertions(IDirectoryInfo? instance)
-		: base(instance)
+	internal DirectoryAssertions(IDirectoryInfo? instance, AssertionChain currentAssertionChain)
+		: base(instance, currentAssertionChain)
 	{
 	}
 
@@ -26,7 +26,7 @@ public class DirectoryAssertions :
 		string because = "",
 		params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -63,7 +63,7 @@ public class DirectoryAssertions :
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
 		var subdirectory = Subject?.GetDirectories(searchPattern).FirstOrDefault();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -90,8 +90,8 @@ public class DirectoryAssertions :
 				directoryInfo => directoryInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, DirectoryAssertions>(
-			new FileSystemAssertions(Subject!.FileSystem),
-			new DirectoryAssertions(subdirectory));
+			new FileSystemAssertions(Subject!.FileSystem, CurrentAssertionChain),
+			new DirectoryAssertions(subdirectory, CurrentAssertionChain));
 	}
 
 	/// <summary>
@@ -101,7 +101,7 @@ public class DirectoryAssertions :
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
 		var file = Subject?.GetFiles(searchPattern).FirstOrDefault();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -128,8 +128,8 @@ public class DirectoryAssertions :
 				directoryInfo => directoryInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, FileAssertions>(
-			new FileSystemAssertions(Subject!.FileSystem),
-			new FileAssertions(file));
+			new FileSystemAssertions(Subject!.FileSystem, CurrentAssertionChain),
+			new FileAssertions(file, CurrentAssertionChain));
 	}
 
 	/// <summary>
@@ -149,7 +149,7 @@ public class DirectoryAssertions :
 		string because = "",
 		params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)

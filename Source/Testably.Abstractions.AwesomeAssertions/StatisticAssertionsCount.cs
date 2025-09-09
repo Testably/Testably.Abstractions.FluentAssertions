@@ -1,11 +1,26 @@
-﻿namespace Testably.Abstractions.FluentAssertions;
+﻿namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Assertions on statistics.
 /// </summary>
-public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions assertions)
-	where TAssertions : StatisticAssertions<TType>
+public abstract class StatisticAssertionsCount<TType, TAssertions> where TAssertions : StatisticAssertions<TType>
 {
+	/// <summary>
+	/// Provides access to the <see cref="AssertionChain"/> that this assertion class was initialized with.
+	/// </summary>
+	public AssertionChain CurrentAssertionChain { get; }
+
+	private readonly TAssertions _assertions;
+
+	/// <summary>
+	///     Assertions on statistics.
+	/// </summary>
+	protected StatisticAssertionsCount(TAssertions assertions, AssertionChain currentAssertionChain)
+	{
+		_assertions = assertions;
+		CurrentAssertionChain = currentAssertionChain;
+	}
+
 	/// <summary>
 	///     Flag indicating if the subject of the assertion is null.
 	/// </summary>
@@ -33,7 +48,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int actualCount = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -43,7 +58,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 			.FailWith(
 				$"Expected {StatisticType} `{StatisticName}` to be {StatisticTypeVerb} at least {CountToString(count)}{{reason}}, but it was {CountToString(actualCount)}.");
 
-		return new AndConstraint<TAssertions>(assertions);
+		return new AndConstraint<TAssertions>(_assertions);
 	}
 
 	/// <summary>
@@ -53,7 +68,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -63,7 +78,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 			.FailWith(
 				$"Expected {StatisticType} `{StatisticName}` to be {StatisticTypeVerb} at least once{{reason}}, but it was {CountToString(count)}.");
 
-		return new AndConstraint<TAssertions>(assertions);
+		return new AndConstraint<TAssertions>(_assertions);
 	}
 
 	/// <summary>
@@ -73,7 +88,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -83,7 +98,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 			.FailWith(
 				$"Expected {StatisticType} `{StatisticName}` to be {StatisticTypeVerb} at least twice{{reason}}, but it was {CountToString(count)}.");
 
-		return new AndConstraint<TAssertions>(assertions);
+		return new AndConstraint<TAssertions>(_assertions);
 	}
 
 	/// <summary>
@@ -93,7 +108,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int actualCount = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -103,7 +118,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 			.FailWith(
 				$"Expected {StatisticType} `{StatisticName}` to be {StatisticTypeVerb} at most {CountToString(count)}{{reason}}, but it was {CountToString(actualCount)}.");
 
-		return new AndConstraint<TAssertions>(assertions);
+		return new AndConstraint<TAssertions>(_assertions);
 	}
 
 	/// <summary>
@@ -113,7 +128,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -123,7 +138,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 			.FailWith(
 				$"Expected {StatisticType} `{StatisticName}` to be {StatisticTypeVerb} at most once{{reason}}, but it was {CountToString(count)}.");
 
-		return new AndConstraint<TAssertions>(assertions);
+		return new AndConstraint<TAssertions>(_assertions);
 	}
 
 	/// <summary>
@@ -133,7 +148,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -143,7 +158,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 			.FailWith(
 				$"Expected {StatisticType} `{StatisticName}` to be {StatisticTypeVerb} at most twice{{reason}}, but it was {CountToString(count)}.");
 
-		return new AndConstraint<TAssertions>(assertions);
+		return new AndConstraint<TAssertions>(_assertions);
 	}
 
 	/// <summary>
@@ -153,7 +168,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int actualCount = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -163,7 +178,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 			.FailWith(
 				$"Expected {StatisticType} `{StatisticName}` to be {StatisticTypeVerb} {CountToString(count)}{{reason}}, but it was {CountToString(actualCount)}.");
 
-		return new AndConstraint<TAssertions>(assertions);
+		return new AndConstraint<TAssertions>(_assertions);
 	}
 
 	/// <summary>
@@ -173,7 +188,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -183,7 +198,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 			.FailWith(
 				$"Expected {StatisticType} `{StatisticName}` to never be {StatisticTypeVerb}{{reason}}, but it was {CountToString(count)}.");
 
-		return new AndConstraint<TAssertions>(assertions);
+		return new AndConstraint<TAssertions>(_assertions);
 	}
 
 	/// <summary>
@@ -193,7 +208,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -203,7 +218,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 			.FailWith(
 				$"Expected {StatisticType} `{StatisticName}` to be {StatisticTypeVerb} once{{reason}}, but it was {CountToString(count)}.");
 
-		return new AndConstraint<TAssertions>(assertions);
+		return new AndConstraint<TAssertions>(_assertions);
 	}
 
 	/// <summary>
@@ -213,7 +228,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -223,7 +238,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 			.FailWith(
 				$"Expected {StatisticType} `{StatisticName}` to be {StatisticTypeVerb} twice{{reason}}, but it was {CountToString(count)}.");
 
-		return new AndConstraint<TAssertions>(assertions);
+		return new AndConstraint<TAssertions>(_assertions);
 	}
 
 	/// <summary>

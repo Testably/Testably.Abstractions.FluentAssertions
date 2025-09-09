@@ -1,4 +1,4 @@
-﻿namespace Testably.Abstractions.FluentAssertions;
+﻿namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Assertions on <see cref="IDirectoryInfo" />.
@@ -9,8 +9,8 @@ public class DirectoryInfoAssertions :
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "directory";
 
-	internal DirectoryInfoAssertions(IDirectoryInfo? instance)
-		: base(instance)
+	internal DirectoryInfoAssertions(IDirectoryInfo? instance, AssertionChain currentAssertionChain)
+		: base(instance, currentAssertionChain)
 	{
 	}
 
@@ -20,7 +20,7 @@ public class DirectoryInfoAssertions :
 	public AndConstraint<DirectoryInfoAssertions> HaveDirectories(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
-		new DirectoryAssertions(Subject).HasDirectories(searchPattern, because, becauseArgs);
+		new DirectoryAssertions(Subject, CurrentAssertionChain).HasDirectories(searchPattern, because, becauseArgs);
 		return new AndConstraint<DirectoryInfoAssertions>(this);
 	}
 
@@ -30,7 +30,7 @@ public class DirectoryInfoAssertions :
 	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> HaveDirectory(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
-		return new DirectoryAssertions(Subject).HasDirectory(searchPattern, because,
+		return new DirectoryAssertions(Subject, CurrentAssertionChain).HasDirectory(searchPattern, because,
 			becauseArgs);
 	}
 
@@ -40,7 +40,7 @@ public class DirectoryInfoAssertions :
 	public AndWhichConstraint<FileSystemAssertions, FileAssertions> HaveFile(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
-		return new DirectoryAssertions(Subject).HasFile(searchPattern, because,
+		return new DirectoryAssertions(Subject, CurrentAssertionChain).HasFile(searchPattern, because,
 			becauseArgs);
 	}
 
@@ -50,7 +50,7 @@ public class DirectoryInfoAssertions :
 	public AndConstraint<DirectoryInfoAssertions> HaveFiles(
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
-		new DirectoryAssertions(Subject).HasFiles(searchPattern, because, becauseArgs);
+		new DirectoryAssertions(Subject, CurrentAssertionChain).HasFiles(searchPattern, because, becauseArgs);
 		return new AndConstraint<DirectoryInfoAssertions>(this);
 	}
 }

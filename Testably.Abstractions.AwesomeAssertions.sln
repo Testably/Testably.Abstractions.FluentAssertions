@@ -42,9 +42,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\test-report.yml = .github\workflows\test-report.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testably.Abstractions.FluentAssertions", "Source\Testably.Abstractions.FluentAssertions\Testably.Abstractions.FluentAssertions.csproj", "{BC318ADF-0A23-4D0F-8FBE-4E73F839450A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testably.Abstractions.AwesomeAssertions", "Source\Testably.Abstractions.AwesomeAssertions\Testably.Abstractions.AwesomeAssertions.csproj", "{BC318ADF-0A23-4D0F-8FBE-4E73F839450A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testably.Abstractions.FluentAssertions.Tests", "Tests\Testably.Abstractions.FluentAssertions.Tests\Testably.Abstractions.FluentAssertions.Tests.csproj", "{67F7AF4E-B807-4627-9452-E5BC50E32B90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testably.Abstractions.AwesomeAssertions.Tests", "Tests\Testably.Abstractions.AwesomeAssertions.Tests\Testably.Abstractions.AwesomeAssertions.Tests.csproj", "{67F7AF4E-B807-4627-9452-E5BC50E32B90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

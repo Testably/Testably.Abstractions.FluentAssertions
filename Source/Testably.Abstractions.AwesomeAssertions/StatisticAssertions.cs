@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Testably.Abstractions.Testing.Statistics;
 
-namespace Testably.Abstractions.FluentAssertions;
+namespace Testably.Abstractions.AwesomeAssertions;
 
 /// <summary>
 ///     Assertions on <see cref="IFileInfo" />.
@@ -12,8 +12,8 @@ public class StatisticAssertions<TType> :
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "statistics";
 
-	internal StatisticAssertions(IStatistics? instance)
-		: base(instance)
+	internal StatisticAssertions(IStatistics? instance, AssertionChain currentAssertionChain)
+		: base(instance, currentAssertionChain)
 	{
 	}
 
@@ -26,11 +26,12 @@ public class StatisticAssertions<TType> :
 	{
 		if (Subject == null)
 		{
-			return new StatisticPropertyAssertions<TType, StatisticAssertions<TType>>(this, propertyName);
+			return new StatisticPropertyAssertions<TType, StatisticAssertions<TType>>(this,
+				propertyName, CurrentAssertionChain);
 		}
 
 		return new StatisticPropertyAssertions<TType, StatisticAssertions<TType>>(this, propertyName,
-			Subject.Properties.Where(p => p.Name == propertyName));
+			Subject.Properties.Where(p => p.Name == propertyName), CurrentAssertionChain);
 	}
 
 	/// <summary>
@@ -42,10 +43,10 @@ public class StatisticAssertions<TType> :
 	{
 		if (Subject == null)
 		{
-			return new StatisticMethodAssertions<TType, StatisticAssertions<TType>>(this, methodName);
+			return new StatisticMethodAssertions<TType, StatisticAssertions<TType>>(this, methodName, CurrentAssertionChain);
 		}
 
 		return new StatisticMethodAssertions<TType, StatisticAssertions<TType>>(this, methodName,
-			Subject.Methods.Where(m => m.Name == methodName));
+			Subject.Methods.Where(m => m.Name == methodName), CurrentAssertionChain);
 	}
 }

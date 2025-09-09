@@ -114,9 +114,9 @@ jobs:
       - name: Navigate to Workspace
         run: cd $GITHUB_WORKSPACE
       - name: Build solution
-        run: msbuild.exe Testably.Abstractions.FluentAssertions.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
+        run: msbuild.exe Testably.Abstractions.AwesomeAssertions.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
       - name: Run tests
-        run: vstest.console.exe .\Build\Tests\Testably.Abstractions.FluentAssertions.Tests\net48\Testably.Abstractions.FluentAssertions.Tests.dll /Logger:trx /ResultsDirectory:TestResults
+        run: vstest.console.exe .\Build\Tests\Testably.Abstractions.AwesomeAssertions.Tests\net48\Testably.Abstractions.AwesomeAssertions.Tests.dll /Logger:trx /ResultsDirectory:TestResults
       - name: Upload test results (.NET Framework)
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
@@ -148,14 +148,14 @@ jobs:
         shell: bash
         run: |
           mkdir Tests/StrykerOutput/Reports -p
-      - name: Analyze Testably.Abstractions.FluentAssertions
+      - name: Analyze Testably.Abstractions.AwesomeAssertions
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         shell: bash
         run: |
           cd Tests
           ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.Config.json -v "${GITHUB_HEAD_REF}" -r "Dashboard" -r "html" -r "cleartext" --since:main
-          mv ./StrykerOutput/**/reports/*.html ./StrykerOutput/Reports/Testably.Abstractions.FluentAssertions-report.html
+          mv ./StrykerOutput/**/reports/*.html ./StrykerOutput/Reports/Testably.Abstractions.AwesomeAssertions-report.html
       - name: Upload Stryker reports
         uses: actions/upload-artifact@v4
         with:
@@ -167,8 +167,8 @@ jobs:
         shell: bash
         run: |
           prNumber="${{ github.event.number }}"
-          commentsUrl="https://api.github.com/repos/Testably/Testably.Abstractions.FluentAssertions/issues/$prNumber/comments"
-          mutationBadge="[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FTestably%2FTestably.Abstractions.FluentAssertions%2F${GITHUB_HEAD_REF})](https://dashboard.stryker-mutator.io/reports/github.com/Testably/Testably.Abstractions.FluentAssertions/${GITHUB_HEAD_REF})"
+          commentsUrl="https://api.github.com/repos/Testably/Testably.Abstractions.AwesomeAssertions/issues/$prNumber/comments"
+          mutationBadge="[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FTestably%2FTestably.Abstractions.AwesomeAssertions%2F${GITHUB_HEAD_REF})](https://dashboard.stryker-mutator.io/reports/github.com/Testably/Testably.Abstractions.AwesomeAssertions/${GITHUB_HEAD_REF})"
           dashboardLink="[Stryker.NET](https://stryker-mutator.io/docs/stryker-net/introduction/) mutation tested the changes in the pull request:  \n$mutationBadge"
           echo "Search for comment in PR#$prNumber containing $mutationBadge..."
           result=$(curl -X GET $commentsUrl \
