@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
 		<RootNamespace>Testably.Abstractions.AwesomeAssertions</RootNamespace>
 		<Description>AwesomeAssertions extension methods for `Testably.Abstractions`.</Description>
 		<PackageReadmeFile>Docs/README.md</PackageReadmeFile>

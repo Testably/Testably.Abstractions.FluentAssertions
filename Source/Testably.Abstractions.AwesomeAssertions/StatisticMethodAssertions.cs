@@ -34,7 +34,7 @@ public class StatisticMethodAssertions<TType, TAssertions>
 		_assertions = assertions;
 		IsSubjectNull = true;
 		StatisticName = methodName;
-		_methods = Array.Empty<MethodStatistic>();
+		_methods = [];
 	}
 
 	internal StatisticMethodAssertions(TAssertions assertions, string methodName,

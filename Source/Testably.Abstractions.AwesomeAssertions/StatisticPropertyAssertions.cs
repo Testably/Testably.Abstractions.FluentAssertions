@@ -32,7 +32,7 @@ public class StatisticPropertyAssertions<TType, TAssertions>
 	{
 		IsSubjectNull = true;
 		StatisticName = propertyName;
-		_properties = Array.Empty<PropertyStatistic>();
+		_properties = [];
 	}
 
 	internal StatisticPropertyAssertions(TAssertions assertions, string propertyName,
