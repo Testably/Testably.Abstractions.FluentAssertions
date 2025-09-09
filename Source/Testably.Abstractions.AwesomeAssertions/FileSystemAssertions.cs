@@ -20,7 +20,7 @@ public class FileSystemAssertions :
 	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> HaveDirectory(
 		string path, string because = "", params object[] becauseArgs)
 	{
-	 	Execute.Assertion
+	 	CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
@@ -42,7 +42,7 @@ public class FileSystemAssertions :
 	public AndWhichConstraint<FileSystemAssertions, FileAssertions> HaveFile(
 		string path, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
@@ -64,7 +64,7 @@ public class FileSystemAssertions :
 	public AndWhichConstraint<FileSystemAssertions, DirectoryAssertions> NotHaveDirectory(
 		string path, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))
@@ -87,7 +87,7 @@ public class FileSystemAssertions :
 	public AndWhichConstraint<FileSystemAssertions, FileAssertions> NotHaveFile(
 		string path, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!string.IsNullOrEmpty(path))

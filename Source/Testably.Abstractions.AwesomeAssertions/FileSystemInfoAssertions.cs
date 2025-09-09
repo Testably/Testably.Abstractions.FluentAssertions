@@ -37,7 +37,7 @@ public abstract class
 	public AndConstraint<TFileSystemInfo> Exist(
 		string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -58,7 +58,7 @@ public abstract class
 	public AndConstraint<TFileSystemInfo> NotExist(
 		string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)

@@ -24,7 +24,7 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> DoesNotHaveAttribute(
 		FileAttributes attribute, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -53,7 +53,7 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> DoesNotHaveFileShare(
 		FileShare fileShare, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -75,7 +75,7 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> HasAttribute(
 		FileAttributes attribute, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -97,7 +97,7 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> HasContent(
 		byte[] bytes, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -121,7 +121,7 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> HasContent(
 		Match pattern, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -145,7 +145,7 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> HasContent(
 		Match pattern, Encoding encoding, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -175,7 +175,7 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> HasFileShare(
 		FileShare fileShare, string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -197,7 +197,7 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> IsNotReadOnly(
 		string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -219,7 +219,7 @@ public class FileAssertions :
 	public AndConstraint<FileAssertions> IsReadOnly(
 		string because = "", params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)

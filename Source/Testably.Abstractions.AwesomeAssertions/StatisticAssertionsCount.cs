@@ -33,7 +33,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int actualCount = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -53,7 +53,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -73,7 +73,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -93,7 +93,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int actualCount = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -113,7 +113,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -133,7 +133,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -153,7 +153,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int actualCount = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -173,7 +173,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -193,7 +193,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)
@@ -213,7 +213,7 @@ public abstract class StatisticAssertionsCount<TType, TAssertions>(TAssertions a
 		string because = "", params object[] becauseArgs)
 	{
 		int count = GetCount();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier("Statistic")
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(!IsSubjectNull)

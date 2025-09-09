@@ -26,7 +26,7 @@ public class DirectoryAssertions :
 		string because = "",
 		params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -63,7 +63,7 @@ public class DirectoryAssertions :
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
 		var subdirectory = Subject?.GetDirectories(searchPattern).FirstOrDefault();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -101,7 +101,7 @@ public class DirectoryAssertions :
 		string searchPattern = "*", string because = "", params object[] becauseArgs)
 	{
 		var file = Subject?.GetFiles(searchPattern).FirstOrDefault();
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
@@ -149,7 +149,7 @@ public class DirectoryAssertions :
 		string because = "",
 		params object[] becauseArgs)
 	{
-		Execute.Assertion
+		CurrentAssertionChain
 			.WithDefaultIdentifier(Identifier)
 			.BecauseOf(because, becauseArgs)
 			.ForCondition(Subject != null)
