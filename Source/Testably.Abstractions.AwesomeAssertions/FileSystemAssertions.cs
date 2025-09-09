@@ -9,8 +9,8 @@ public class FileSystemAssertions :
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "filesystem";
 
-	internal FileSystemAssertions(IFileSystem instance)
-		: base(instance)
+	internal FileSystemAssertions(IFileSystem instance, AssertionChain currentAssertionChain)
+		: base(instance, currentAssertionChain)
 	{
 	}
 

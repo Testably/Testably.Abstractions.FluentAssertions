@@ -11,8 +11,8 @@ public class DirectoryAssertions :
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "directory";
 
-	internal DirectoryAssertions(IDirectoryInfo? instance)
-		: base(instance)
+	internal DirectoryAssertions(IDirectoryInfo? instance, AssertionChain currentAssertionChain)
+		: base(instance, currentAssertionChain)
 	{
 	}
 

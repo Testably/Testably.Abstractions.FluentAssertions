@@ -13,8 +13,8 @@ public class FileAssertions :
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "file";
 
-	internal FileAssertions(IFileInfo? instance)
-		: base(instance)
+	internal FileAssertions(IFileInfo? instance, AssertionChain currentAssertionChain)
+		: base(instance, currentAssertionChain)
 	{
 	}
 

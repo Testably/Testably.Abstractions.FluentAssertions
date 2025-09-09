@@ -9,8 +9,8 @@ public class FileSystemInfoAssertions :
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "file system info";
 
-	internal FileSystemInfoAssertions(IFileSystemInfo? instance)
-		: base(instance)
+	internal FileSystemInfoAssertions(IFileSystemInfo? instance, AssertionChain currentAssertionChain)
+		: base(instance, currentAssertionChain)
 	{
 	}
 }
@@ -27,7 +27,10 @@ public abstract class
 	/// <summary>
 	///     Initializes a new instance of <see cref="FileSystemInfoAssertions{TFileSystemInfo,TAssertion}" />
 	/// </summary>
-	protected FileSystemInfoAssertions(TFileSystemInfo? subject) : base(subject)
+	protected FileSystemInfoAssertions(
+		TFileSystemInfo? subject,
+		AssertionChain currentAssertionChain)
+		: base(subject, currentAssertionChain)
 	{
 	}
 

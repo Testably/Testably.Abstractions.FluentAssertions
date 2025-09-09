@@ -12,8 +12,8 @@ public class StatisticAssertions<TType> :
 	/// <inheritdoc cref="ReferenceTypeAssertions{TSubject,TAssertions}.Identifier" />
 	protected override string Identifier => "statistics";
 
-	internal StatisticAssertions(IStatistics? instance)
-		: base(instance)
+	internal StatisticAssertions(IStatistics? instance, AssertionChain currentAssertionChain)
+		: base(instance, currentAssertionChain)
 	{
 	}
 
