@@ -23,7 +23,7 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> BeReadOnly(
 		string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).IsReadOnly(because, becauseArgs);
+		new FileAssertions(Subject, CurrentAssertionChain).IsReadOnly(because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -33,7 +33,7 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> HaveAttribute(
 		FileAttributes attribute, string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).HasAttribute(attribute, because, becauseArgs);
+		new FileAssertions(Subject, CurrentAssertionChain).HasAttribute(attribute, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -43,7 +43,7 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> HaveContent(
 		byte[] bytes, string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).HasContent(bytes, because, becauseArgs);
+		new FileAssertions(Subject, CurrentAssertionChain).HasContent(bytes, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -53,7 +53,7 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> HaveContent(
 		Match pattern, string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).HasContent(pattern, because, becauseArgs);
+		new FileAssertions(Subject, CurrentAssertionChain).HasContent(pattern, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -64,7 +64,7 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> HaveContent(
 		Match pattern, Encoding encoding, string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).HasContent(pattern, encoding, because, becauseArgs);
+		new FileAssertions(Subject, CurrentAssertionChain).HasContent(pattern, encoding, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -81,7 +81,7 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> HaveFileShare(
 		FileShare fileShare, string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).HasFileShare(fileShare, because, becauseArgs);
+		new FileAssertions(Subject, CurrentAssertionChain).HasFileShare(fileShare, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -91,7 +91,7 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> NotBeReadOnly(
 		string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).IsNotReadOnly(because, becauseArgs);
+		new FileAssertions(Subject, CurrentAssertionChain).IsNotReadOnly(because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -101,7 +101,7 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> NotHaveAttribute(
 		FileAttributes attribute, string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).DoesNotHaveAttribute(attribute, because, becauseArgs);
+		new FileAssertions(Subject, CurrentAssertionChain).DoesNotHaveAttribute(attribute, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 
@@ -118,7 +118,7 @@ public class FileInfoAssertions :
 	public AndConstraint<FileInfoAssertions> NotHaveFileShare(
 		FileShare fileShare, string because = "", params object[] becauseArgs)
 	{
-		new FileAssertions(Subject).DoesNotHaveFileShare(fileShare, because, becauseArgs);
+		new FileAssertions(Subject, CurrentAssertionChain).DoesNotHaveFileShare(fileShare, because, becauseArgs);
 		return new AndConstraint<FileInfoAssertions>(this);
 	}
 }

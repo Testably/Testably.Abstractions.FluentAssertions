@@ -90,8 +90,8 @@ public class DirectoryAssertions :
 				directoryInfo => directoryInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, DirectoryAssertions>(
-			new FileSystemAssertions(Subject!.FileSystem),
-			new DirectoryAssertions(subdirectory));
+			new FileSystemAssertions(Subject!.FileSystem, CurrentAssertionChain),
+			new DirectoryAssertions(subdirectory, CurrentAssertionChain));
 	}
 
 	/// <summary>
@@ -128,8 +128,8 @@ public class DirectoryAssertions :
 				directoryInfo => directoryInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, FileAssertions>(
-			new FileSystemAssertions(Subject!.FileSystem),
-			new FileAssertions(file));
+			new FileSystemAssertions(Subject!.FileSystem, CurrentAssertionChain),
+			new FileAssertions(file, CurrentAssertionChain));
 	}
 
 	/// <summary>

@@ -33,7 +33,7 @@ public class FileSystemAssertions :
 				_ => path, directoryInfo => directoryInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, DirectoryAssertions>(this,
-			new DirectoryAssertions(Subject.DirectoryInfo.New(path)));
+			new DirectoryAssertions(Subject.DirectoryInfo.New(path), CurrentAssertionChain));
 	}
 
 	/// <summary>
@@ -55,7 +55,7 @@ public class FileSystemAssertions :
 				_ => path, fileInfo => fileInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, FileAssertions>(this,
-			new FileAssertions(Subject.FileInfo.New(path)));
+			new FileAssertions(Subject.FileInfo.New(path), CurrentAssertionChain));
 	}
 
 	/// <summary>
@@ -78,7 +78,7 @@ public class FileSystemAssertions :
 				_ => path, directoryInfo => directoryInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, DirectoryAssertions>(this,
-			new DirectoryAssertions(Subject.DirectoryInfo.New(path)));
+			new DirectoryAssertions(Subject.DirectoryInfo.New(path), CurrentAssertionChain));
 	}
 
 	/// <summary>
@@ -101,6 +101,6 @@ public class FileSystemAssertions :
 				_ => path, fileInfo => fileInfo.Name);
 
 		return new AndWhichConstraint<FileSystemAssertions, FileAssertions>(this,
-			new FileAssertions(Subject.FileInfo.New(path)));
+			new FileAssertions(Subject.FileInfo.New(path), CurrentAssertionChain));
 	}
 }
