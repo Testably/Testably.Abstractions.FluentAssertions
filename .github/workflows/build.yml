@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             6.0.x
@@ -83,7 +83,7 @@ jobs:
           version="${GITHUB_REF#refs/heads/release/}"
           git tag "${version}"
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             6.0.x
@@ -114,7 +114,7 @@ jobs:
           version="${GITHUB_REF#refs/heads/release/}"
           git tag "${version}"
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             6.0.x
@@ -145,7 +145,7 @@ jobs:
           version="${GITHUB_REF#refs/heads/release/}"
           git tag "${version}"
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             6.0.x
@@ -176,7 +176,7 @@ jobs:
           version="${GITHUB_REF#refs/heads/release/}"
           git tag "${version}"
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
       - name: Setup VSTest
@@ -234,7 +234,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             6.0.x
@@ -274,7 +274,7 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2.0.1
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             6.0.x
