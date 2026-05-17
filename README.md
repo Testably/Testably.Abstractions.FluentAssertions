@@ -1,3 +1,8 @@
+# NO LONGER MAINTAINED
+
+**Due to the license update of FluentAssertions, this package is no longer maintained!**
+
+
 ![Testably.Abstractions.FluentAssertions](https://raw.githubusercontent.com/Testably/Testably.Abstractions.FluentAssertions/main/Docs/Images/social-preview.png)  
 [![Nuget](https://img.shields.io/nuget/v/Testably.Abstractions.FluentAssertions)](https://www.nuget.org/packages/Testably.Abstractions.FluentAssertions)
 [![Build](https://github.com/Testably/Testably.Abstractions.FluentAssertions/actions/workflows/build.yml/badge.svg)](https://github.com/Testably/Testably.Abstractions.FluentAssertions/actions/workflows/build.yml)
