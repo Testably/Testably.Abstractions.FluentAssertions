@@ -27,12 +27,12 @@ jobs:
         run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory "TestResults"
       - name: Upload test results (MacOS)
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Test results (MacOS)
           path: TestResults
       - name: Upload coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Code coverage (MacOS)
           path: "**/coverage.cobertura.xml"
@@ -58,12 +58,12 @@ jobs:
         run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory "TestResults"
       - name: Upload test results (Ubuntu)
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Test results (Ubuntu)
           path: TestResults
       - name: Upload coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Code coverage (Ubuntu)
           path: "**/coverage.cobertura.xml"
@@ -89,12 +89,12 @@ jobs:
         run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory "TestResults"
       - name: Upload test results (Windows)
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Test results (Windows)
           path: TestResults
       - name: Upload coverage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Code coverage (Windows)
           path: "**/coverage.cobertura.xml"
@@ -119,7 +119,7 @@ jobs:
         run: vstest.console.exe .\Build\Tests\Testably.Abstractions.FluentAssertions.Tests\net48\Testably.Abstractions.FluentAssertions.Tests.dll /Logger:trx /ResultsDirectory:TestResults
       - name: Upload test results (.NET Framework)
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Test results (.NET Framework)
           path: TestResults
@@ -157,7 +157,7 @@ jobs:
           ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.Config.json -v "${GITHUB_HEAD_REF}" -r "Dashboard" -r "html" -r "cleartext" --since:main
           mv ./StrykerOutput/**/reports/*.html ./StrykerOutput/Reports/Testably.Abstractions.FluentAssertions-report.html
       - name: Upload Stryker reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Stryker
           path: Tests/StrykerOutput/Reports/*
