@@ -1,4 +1,10 @@
-![Testably.Abstractions.FluentAssertions](https://raw.githubusercontent.com/Testably/Testably.Abstractions.FluentAssertions/main/Docs/Images/social-preview.png)  
+# NO LONGER MAINTAINED
+
+**Due to the license update of FluentAssertions, this package is no longer maintained!**
+
+---
+# Testably.Abstractions.FluentAssertions
+
 [![Nuget](https://img.shields.io/nuget/v/Testably.Abstractions.FluentAssertions)](https://www.nuget.org/packages/Testably.Abstractions.FluentAssertions)
 [![Build](https://github.com/Testably/Testably.Abstractions.FluentAssertions/actions/workflows/build.yml/badge.svg)](https://github.com/Testably/Testably.Abstractions.FluentAssertions/actions/workflows/build.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/5b9b2f79950447a69d69037b43acd590)](https://app.codacy.com/gh/Testably/Testably.Abstractions.FluentAssertions/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
